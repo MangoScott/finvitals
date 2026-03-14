@@ -116,6 +116,60 @@
   .proof-list li:last-child { border-bottom: none; }
   .proof-label { font-family: 'Caveat', cursive; font-size: 22px; font-weight: 600; color: var(--accent); min-width: 200px; flex-shrink: 0; }
 
+  /* SVG ANIMATIONS */
+  @keyframes drawLine { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
+  @keyframes pulse { 0%, 100% { opacity: 0.5; r: 3; } 50% { opacity: 1; r: 5; } }
+  @keyframes flowDash { from { stroke-dashoffset: 14; } to { stroke-dashoffset: 0; } }
+  @keyframes gentleBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+  @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-1.5deg); } 75% { transform: rotate(1.5deg); } }
+  @keyframes fadeScale { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+
+  .hero-illustration svg .hero-line { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawLine 2s ease-out 0.6s forwards; }
+  .hero-illustration svg .hero-dot { opacity: 0; animation: fadeScale 0.4s ease 2.4s forwards; }
+  .hero-illustration svg .hero-dash { stroke-dasharray: 5 4; animation: flowDash 0.8s linear infinite; }
+  .hero-illustration svg .hero-ai-box { opacity: 0; animation: fadeScale 0.5s ease 2.6s forwards; }
+  .hero-illustration svg .hero-branch { opacity: 0; animation: fadeScale 0.4s ease 2.9s forwards; }
+  .hero-illustration svg .hero-person { opacity: 0; }
+  .hero-illustration svg .hero-person-1 { animation: fadeScale 0.4s ease 3.1s forwards; }
+  .hero-illustration svg .hero-person-2 { animation: fadeScale 0.4s ease 3.3s forwards; }
+  .hero-illustration svg .hero-person-3 { animation: fadeScale 0.4s ease 3.5s forwards; }
+  .hero-illustration svg .hero-label { opacity: 0; animation: fadeScale 0.4s ease 3.7s forwards; }
+
+  .alert-dot { animation: pulse 2.5s ease-in-out infinite; }
+
+  .layer-sketch svg { transition: transform 0.4s ease; }
+  .layer:hover .layer-sketch svg { transform: rotate(-2deg) scale(1.05); }
+
+  .tool-card { transform: rotate(0deg); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .tool-card:nth-child(2) { transform: rotate(0.3deg); }
+  .tool-card:nth-child(3) { transform: rotate(-0.2deg); }
+  .tool-card:nth-child(5) { transform: rotate(0.4deg); }
+  .tool-card:hover { transform: translateY(-3px) rotate(0deg) !important; box-shadow: 0 12px 32px rgba(180,83,9,0.1); }
+
+  .stat { transition: transform 0.3s ease; }
+  .stat:hover { transform: translateY(-2px); }
+  .stat-number { transition: color 0.3s ease; }
+  .stat:hover .stat-number { color: var(--accent-dark); }
+
+  .channel { transition: transform 0.25s ease, border-color 0.25s ease; transform: rotate(0deg); }
+  .channel:nth-child(1) { transform: rotate(-0.3deg); }
+  .channel:nth-child(2) { transform: rotate(0.2deg); }
+  .channel:nth-child(3) { transform: rotate(0.15deg); }
+  .channel:nth-child(4) { transform: rotate(-0.25deg); }
+  .channel:hover { transform: rotate(0deg) translateY(-2px); border-color: var(--accent); }
+
+  .proof-list li { transition: padding-left 0.2s ease; }
+  .proof-list li:hover { padding-left: 6px; }
+
+  .callout { position: relative; }
+  .callout::after { content: ''; position: absolute; top: -2px; right: -2px; bottom: -2px; left: -2px; border: 1.5px solid var(--accent); opacity: 0.06; border-radius: 2px 5px 3px 4px; transform: rotate(-0.2deg); pointer-events: none; }
+
+  .urgency-box { position: relative; }
+  .urgency-box::after { content: ''; position: absolute; top: -1px; right: -1px; bottom: -1px; left: -1px; border: 1.5px solid var(--red); opacity: 0.08; border-radius: 3px 2px 4px 2px; transform: rotate(0.15deg); pointer-events: none; }
+
+  .closing-quote { position: relative; }
+  .closing-quote::before { content: '\201C'; font-family: 'Caveat', cursive; font-size: 64px; color: var(--accent); opacity: 0.15; position: absolute; top: -20px; left: -10px; line-height: 1; }
+
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -157,38 +211,48 @@
 
     <div class="hero-illustration">
       <svg width="480" height="160" viewBox="0 0 480 160" fill="none">
-        <!-- barometer/finvitals line -->
-        <path d="M30 80 L80 80 L95 40 L110 110 L125 55 L140 95 L155 65 L170 80 L220 80" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="220" cy="80" r="4" fill="#b45309"/>
-        <!-- dotted line to AI brain -->
-        <path d="M228 80 L280 80" stroke="#b45309" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/>
-        <!-- AI "brain" / processor -->
-        <rect x="284" y="60" width="40" height="40" rx="6" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
-        <path d="M296 72 L296 88 M304 72 L304 88 M312 72 L312 88" stroke="#b45309" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
-        <path d="M290 80 L284 80 M318 80 L324 80 M304 56 L304 60 M304 100 L304 104" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round"/>
-        <text x="289" y="84" font-family="Caveat, cursive" font-size="13" fill="#b45309">AI</text>
-        <!-- arrows out to people -->
-        <path d="M328 70 C345 55, 360 60, 380 50" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
-        <path d="M328 80 L380 80" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
-        <path d="M328 90 C345 105, 360 100, 380 110" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
-        <!-- people -->
-        <circle cx="400" cy="42" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
-        <path d="M400 51 L400 70" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M400 58 L393 66" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M400 58 L407 64" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <circle cx="400" cy="72" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
-        <path d="M400 81 L400 100" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M400 88 L393 96" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M400 88 L407 94" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <circle cx="400" cy="102" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
-        <path d="M400 111 L400 130" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M400 118 L393 126" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <path d="M400 118 L407 124" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
-        <!-- labels -->
-        <text x="415" y="58" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">alert</text>
-        <text x="415" y="88" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">connect</text>
-        <text x="415" y="118" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">enroll</text>
-        <text x="30" y="145" font-family="Caveat, cursive" font-size="15" fill="#7a7a7a">see it → stop it</text>
+        <!-- barometer/finvitals line — draws in -->
+        <path class="hero-line" d="M30 80 L80 80 L95 40 L110 110 L125 55 L140 95 L155 65 L170 80 L220 80" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="hero-dot" cx="220" cy="80" r="4" fill="#b45309"/>
+        <!-- dotted line to AI brain — flows -->
+        <path class="hero-dash" d="M228 80 L280 80" stroke="#b45309" stroke-width="1.5" fill="none"/>
+        <!-- AI "brain" / processor — fades in -->
+        <g class="hero-ai-box">
+          <rect x="284" y="60" width="40" height="40" rx="6" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
+          <path d="M296 72 L296 88 M304 72 L304 88 M312 72 L312 88" stroke="#b45309" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+          <path d="M290 80 L284 80 M318 80 L324 80 M304 56 L304 60 M304 100 L304 104" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round"/>
+          <text x="289" y="84" font-family="Caveat, cursive" font-size="13" fill="#b45309">AI</text>
+        </g>
+        <!-- arrows out to people — fade in as group -->
+        <g class="hero-branch">
+          <path d="M328 70 C345 55, 360 60, 380 50" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+          <path d="M328 80 L380 80" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+          <path d="M328 90 C345 105, 360 100, 380 110" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        </g>
+        <!-- people — stagger in one by one -->
+        <g class="hero-person hero-person-1">
+          <circle cx="400" cy="42" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+          <path d="M400 51 L400 70" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M400 58 L393 66" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M400 58 L407 64" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g class="hero-person hero-person-2">
+          <circle cx="400" cy="72" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+          <path d="M400 81 L400 100" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M400 88 L393 96" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M400 88 L407 94" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <g class="hero-person hero-person-3">
+          <circle cx="400" cy="102" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+          <path d="M400 111 L400 130" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M400 118 L393 126" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+          <path d="M400 118 L407 124" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        </g>
+        <!-- labels — fade in last -->
+        <text class="hero-label" x="415" y="58" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">alert</text>
+        <text class="hero-label" x="415" y="88" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">connect</text>
+        <text class="hero-label" x="415" y="118" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">enroll</text>
+        <text class="hero-label" x="30" y="145" font-family="Caveat, cursive" font-size="15" fill="#7a7a7a">see it → stop it</text>
       </svg>
     </div>
 
@@ -221,13 +285,13 @@
     <h2>H.R. 1 is happening now</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
 
-    <p class="lead">H.R. 1 just passed. It contains the largest proposed cuts to SNAP in history, expands work requirements to age 64, and imposes new Medicaid community engagement requirements. Millions of Americans are about to lose food and health benefits. Most of them don't know it yet.</p>
+    <p class="lead">H.R. 1 just passed. It contains the largest proposed cuts to SNAP in history. Work requirements expanding to age 64. New Medicaid community engagement mandates. Millions of people are about to lose their food and health benefits — and most of them have no idea.</p>
 
-    <p>This isn't abstract. In Wolfe County, Kentucky — where we've done two years of field research with UVA — 135,000 people are at risk of losing SNAP. In Chicago, 50% of eligible elderly aren't even receiving SNAP benefits now, and the new requirements will push more off. In Atlanta's majority-Black neighborhoods, only 38% of SNAP retailers carry fresh produce. These communities are already stretched thin. H.R. 1 is about to snap them.</p>
+    <p>We know because we've been in these communities. In Wolfe County, Kentucky — where we spent two years doing field research with UVA — 135,000 people are at risk of losing SNAP. In Chicago, half of eligible seniors don't receive SNAP now; the new rules will push even more out. In Atlanta's majority-Black neighborhoods, only 38% of SNAP retailers carry fresh produce. These are communities already running on fumes. H.R. 1 is about to pull the plug.</p>
 
     <div class="urgency-box reveal">
-      <h3>the numbers are real people</h3>
-      <p>63% of Americans can't cover a $500 emergency. Every dollar of SNAP benefits returns $1.54 in GDP. When people lose benefits, they don't just go hungry — they skip medications, miss rent, and end up in emergency rooms. The programs exist. The funding exists. But the people who need them most are the last to find out they're losing them.</p>
+      <h3>these aren't statistics</h3>
+      <p>63% of Americans can't cover a $500 emergency. Every dollar of SNAP returns $1.54 to the economy. When someone loses benefits, they don't just go hungry — they skip their meds, fall behind on rent, end up in the ER. The programs exist. The money is there. But the people who need help the most are always the last to hear they're losing it.</p>
     </div>
   </section>
 
@@ -237,7 +301,7 @@
     <h2>what we already built</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
 
-    <p class="lead">FinMango didn't start building when the crisis hit. The infrastructure has been running for years. FinVitals is the AI that makes it act.</p>
+    <p class="lead">We didn't start building when the crisis hit. This infrastructure has been running for years. FinVitals is the AI that finally makes it act.</p>
 
     <ul class="proof-list">
       <li><span class="proof-label">Barometer</span>Tracks financial stress across all 50 states daily — anxiety, food insecurity, housing stress, affordability — from BLS, Census, HUD, FRED, and Google Trends. It can see the crisis forming right now.</li>
@@ -246,7 +310,7 @@
       <li><span class="proof-label">Affordability Lab</span>Interactive housing affordability analysis — rent burden, income-to-housing ratios, cost-of-living pressure across U.S. communities.</li>
     </ul>
 
-    <p>The seeing part works. The connecting part works. What's missing is the AI layer between them — the part that takes a Barometer signal in Wolfe County and automatically reaches every affected household with the specific programs they still qualify for. That's FinVitals.</p>
+    <p>So the seeing works. The connecting works. What's missing is the thing in the middle — the part that takes a Barometer signal in Wolfe County and automatically reaches every affected household with the programs they still qualify for. That's what FinVitals is.</p>
   </section>
 
 </div>
@@ -325,13 +389,13 @@
     <h2>see it. stop it.</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
 
-    <p class="lead">FinVitals is the AI layer between seeing a crisis and stopping it. Two steps. That's it.</p>
+    <p class="lead">The gap isn't data. It's not tools. It's the space between knowing something bad is coming and actually reaching the people it's going to hit. FinVitals closes that gap. Two steps.</p>
 
     <div class="layer reveal">
       <div class="layer-sketch">
         <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
           <path d="M20 70 L35 70 L42 35 L50 80 L58 50 L66 65 L74 45 L80 70" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="50" cy="30" r="3" fill="#dc2626" opacity="0.7"/>
+          <circle class="alert-dot" cx="50" cy="30" r="3" fill="#dc2626" opacity="0.7"/>
           <path d="M50 27 L50 18" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/>
           <text x="22" y="92" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">see it</text>
         </svg>
@@ -339,7 +403,7 @@
       <div class="layer-content">
         <div class="layer-number">step one</div>
         <h3>see who's at risk</h3>
-        <p>AI analyzes Barometer signals alongside H.R. 1 policy changes and identifies which communities and households are about to lose benefits. Not "135,000 Kentuckians" as a statistic — but which families, in which zip codes, losing which programs, by what deadline. A spike in financial anxiety in Wolfe County plus SNAP work requirement expansion to age 64 doesn't just show up on a dashboard. It triggers action.</p>
+        <p>The Barometer is already tracking financial stress in real time. Layer in H.R. 1 policy changes and you can see exactly who's about to lose what. Not "135,000 Kentuckians" — which families, which zip codes, which programs, by when. A spike in financial anxiety in Wolfe County plus SNAP work requirements expanding to age 64 doesn't just sit on a dashboard. It triggers the next step.</p>
       </div>
     </div>
 
@@ -360,7 +424,7 @@
       <div class="layer-content">
         <div class="layer-number">step two</div>
         <h3>reach them first</h3>
-        <p>Proactively connect at-risk households with the specific programs they still qualify for — before the deadline hits. The Food Assistance Calculator and Food Desert Analyzer stop being tools people have to find and become tools that find people. One conversation. Every alternative. Personalized to their situation, location, and timeline. The goal: nobody loses benefits they could have kept because nobody told them in time.</p>
+        <p>Once you know who's at risk, reach them — with the exact programs they still qualify for, before the deadline. The Food Assistance Calculator and Food Desert Analyzer stop being things people have to find and start finding people. One conversation. Every alternative. Personalized to where they live and what they're about to lose. The goal is simple: nobody falls off a cliff because nobody told them there was a bridge.</p>
       </div>
     </div>
   </section>
@@ -371,9 +435,9 @@
     <h2>the tool states need right now</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
 
-    <p class="lead">State SNAP and Medicaid directors are overwhelmed by H.R. 1 implementation. They have to notify affected households. They don't have the tools to do it.</p>
+    <p class="lead">Talk to any state SNAP or Medicaid director right now. They're drowning. H.R. 1 requires them to notify affected households — but they don't have anything close to the tools they'd need to actually do it.</p>
 
-    <p>Every state implementing H.R. 1 changes faces the same problem: they know the new rules are coming, they know people will lose benefits, and they have no scalable way to identify who's affected and reach them in time. Caseworker teams are already stretched. Legacy systems weren't built for proactive outreach. The clock is ticking.</p>
+    <p>Every state faces the same thing: they know the rules are changing, they know people will fall off, and they have no way to figure out who or reach them before it happens. Caseworkers are already buried. The legacy systems weren't built for this. Nobody's is.</p>
 
     <p>FinVitals gives them what they've never had:</p>
 
@@ -391,15 +455,15 @@
     <h2>about FinMango</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
 
-    <p>FinMango is a 501(c)(3) I founded in 2017 with one idea: financial health is a right, not a privilege. We've reached over 1 million people across 100+ countries. Our Google Health partnership was published in Nature. We've spent two years doing field research with the University of Virginia across five communities — including the ones H.R. 1 will hit hardest.</p>
+    <p>I started FinMango in 2017 as a 501(c)(3) with one belief: financial health is a right, not a privilege. What started as a classroom project at Kent State has reached over 1 million people across 100+ countries. We published with Google Health in Nature. We spent two years in the field with UVA across five communities — including the ones H.R. 1 is about to hit hardest.</p>
 
-    <p>We work with Google Health, the WHO, the World Bank, and the IMF. Everything we build is open source. The Barometer, the Food Assistance Calculator, the Food Desert Analyzer — they're all live, all free, all running. FinVitals doesn't start from scratch. It connects the pieces we've already built with the AI layer the moment demands.</p>
+    <p>Our partners include Google Health, the WHO, the World Bank, and the IMF. Everything we build is open source. The Barometer, the Calculator, the Analyzer — all live, all free. FinVitals isn't a new idea. It's the thing we've been building toward for years. The crisis just made it urgent.</p>
 
     <div class="callout reveal">
       <div class="callout-label">the ask</div>
       <h3>$2M over 18 months</h3>
-      <p>Build the AI layer that connects the Barometer's seeing to the Calculator's acting. Pilot with 2–3 states implementing H.R. 1 changes where we have existing research — Kentucky, Georgia, Illinois, Ohio, Idaho. Scale to 10+ states. Open-source everything so any government or nonprofit can deploy it.</p>
-      <p>The infrastructure exists. The data exists. The crisis is here. We need the AI to connect them before the deadlines hit.</p>
+      <p>Connect the Barometer to the Calculator with AI. Pilot with 2–3 states where we already have research on the ground — Kentucky, Georgia, Illinois, Ohio, Idaho. Scale to 10+ states. Open-source everything so anyone can run it.</p>
+      <p>The infrastructure is built. The data is flowing. The crisis is here. We just need the AI to close the loop before the deadlines do.</p>
     </div>
   </section>
 
@@ -413,7 +477,7 @@
       <path d="M172 34 C173 37, 177 37, 178 34" stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-linecap="round"/>
     </svg>
 
-    <p class="closing-quote">Right now, someone in Wolfe County is about to lose their SNAP benefits and doesn't know it. The Barometer can see it. The Calculator can help them. FinVitals is the AI that connects those two things before it's too late.</p>
+    <p class="closing-quote">Somewhere in Wolfe County right now, someone is about to lose their SNAP benefits and has no idea. We can already see it happening. We already have the tools to help them. We just need to connect those two things before the deadline does the damage. That's FinVitals.</p>
 
     <svg width="100" height="8" viewBox="0 0 100 8" style="display:block; margin: 0 auto 30px;"><path d="M10 4 C25 0, 35 8, 50 4 C65 0, 75 8, 90 4" stroke="#b45309" stroke-width="1.2" fill="none" opacity="0.4"/></svg>
 
