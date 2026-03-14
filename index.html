@@ -21,84 +21,99 @@
     --light: #d0d0d0;
     --lighter: #e8e8e8;
     --bg: #fefefe;
+    --amber: #d4933a;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; overflow-x: hidden; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(254,254,254,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+  /* ─── NAV ─── */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 60px; display: flex; justify-content: space-between; align-items: center; background: rgba(254,254,254,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
   nav.scrolled { border-bottom-color: var(--lighter); }
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .nav-logo img { height: 26px; }
   .nav-logo span { font-family: 'Caveat', cursive; font-size: 16px; color: var(--muted); padding-left: 10px; border-left: 1px solid var(--lighter); }
-  .nav-links { display: flex; align-items: center; gap: 28px; }
-  .nav-links a { font-size: 13.5px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links { display: flex; align-items: center; gap: 36px; }
+  .nav-links a { font-size: 13.5px; color: var(--muted); text-decoration: none; font-weight: 400; transition: color 0.2s; }
   .nav-links a:hover { color: var(--ink); }
 
-  .wrap { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  /* ─── CONTENT WRAPPER ─── */
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
 
+  /* ─── HERO ─── */
   .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 80px; }
-  .hero h1 { font-family: 'Caveat', cursive; font-size: clamp(72px, 10vw, 100px); font-weight: 700; color: var(--ink); line-height: 0.9; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.8s ease forwards; }
-  .hero-sub { font-size: clamp(18px, 2.5vw, 21px); color: var(--accent); font-weight: 400; margin-bottom: 50px; letter-spacing: 0.3px; opacity: 0; animation: fadeUp 0.8s ease 0.12s forwards; }
+  .hero h1 { font-family: 'DM Sans', sans-serif; font-size: clamp(60px, 9vw, 100px); letter-spacing: -3px; font-weight: 700; color: var(--ink); line-height: 0.95; margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .hero-sub { font-size: clamp(18px, 2.5vw, 24px); color: var(--accent); font-weight: 400; margin-bottom: 50px; letter-spacing: 0.5px; opacity: 0; animation: fadeUp 0.8s ease 0.12s forwards; }
   .hero-illustration { opacity: 0; animation: fadeUp 0.8s ease 0.24s forwards; }
+  .hero-illustration svg { width: 100%; max-width: 680px; height: auto; }
   .hero-meta { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 40px; border-top: 1.5px solid var(--lighter); opacity: 0; animation: fadeUp 0.8s ease 0.36s forwards; }
   .hero-meta p { font-size: 14px; color: var(--muted); line-height: 1.6; }
   .hero-meta strong { color: var(--ink); font-weight: 500; }
   .hero-meta-right { text-align: right; }
 
-  .section { padding: 90px 0; }
+  /* ─── SECTIONS ─── */
+  .section { padding: 100px 0; }
   .section-label { font-family: 'Caveat', cursive; font-size: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
-  .section h2 { font-family: 'Caveat', cursive; font-size: clamp(42px, 6vw, 54px); font-weight: 600; color: var(--ink); line-height: 1.05; margin-bottom: 10px; }
-  .section p { font-size: 17px; line-height: 1.75; color: var(--text); margin-bottom: 20px; max-width: 680px; }
+  .section h2 { font-family: 'DM Sans', sans-serif; font-size: clamp(38px, 5vw, 48px); letter-spacing: -1.5px; font-weight: 700; color: var(--ink); line-height: 1.05; margin-bottom: 12px; }
+  .annotation { font-family: 'Caveat', cursive; font-size: clamp(20px, 4vw, 24px); color: var(--amber); transform: rotate(-3deg); display: inline-block; margin-left: 12px; font-weight: 500; }
+  .section p { font-size: 17px; line-height: 1.75; color: var(--text); margin-bottom: 20px; max-width: 860px; }
   p.lead { font-size: 20px; color: var(--ink); font-weight: 400; line-height: 1.65; margin-bottom: 28px; }
   .wavy { display: block; margin: 6px 0 28px; opacity: 0.5; }
 
-  .stats-banner { background: var(--accent-pale); border-top: 1px solid var(--accent-light); border-bottom: 1px solid var(--accent-light); padding: 56px 0; }
-  .stats-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; display: flex; gap: 20px; justify-content: space-between; }
-  .stat { text-align: center; flex: 1; }
-  .stat-number { font-family: 'Caveat', cursive; font-size: clamp(42px, 5vw, 56px); font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 6px; }
-  .stat-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  /* ─── STATS BANNER ─── */
+  .stats-banner { background: var(--ink); padding: 64px 0; color: var(--bg); }
+  .stats-inner { max-width: 1100px; margin: 0 auto; padding: 0 60px; display: flex; gap: 40px; justify-content: space-between; }
+  .stat { text-align: left; flex: 1; padding-left: 24px; border-left: 2px solid var(--accent); }
+  .stat-number { font-family: 'DM Sans', sans-serif; font-size: clamp(48px, 6vw, 64px); font-weight: 700; letter-spacing: -2px; color: var(--bg); line-height: 1; margin-bottom: 12px; }
+  .stat-label { font-size: 15.5px; color: var(--light); line-height: 1.5; }
 
-  .layer { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px dashed var(--light); }
-  .layer:last-child { border-bottom: none; }
+  /* ─── LAYERS ─── */
+  .layer { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 48px; padding-bottom: 48px; position: relative; }
+  .layer:not(:last-child)::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; border-bottom: 1.5px dashed var(--light); filter: url(#hand-drawn); }
   .layer-sketch { flex-shrink: 0; width: 110px; display: flex; align-items: center; justify-content: center; }
   .layer-content { flex: 1; }
   .layer-number { font-family: 'Caveat', cursive; font-size: 15px; color: var(--muted); margin-bottom: 2px; }
   .layer-content h3 { font-family: 'Caveat', cursive; font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1.1; margin-bottom: 10px; }
-  .layer-content p { font-size: 15.5px; max-width: 560px; }
+  .layer-content p { font-size: 16px; max-width: 720px; }
 
-  .callout { background: var(--accent-pale); border-left: 3px solid var(--accent); padding: 32px 36px; margin: 44px 0; }
+  /* ─── CALLOUT ─── */
+  .callout { background: var(--accent-pale); padding: 32px 36px; margin: 44px 0; position: relative; border-radius: 4px; }
+  .callout::before { content: ''; position: absolute; inset: 0; border-left: 3px solid var(--accent); border-radius: 8px 255px 12px 25px / 255px 8px 225px 10px; pointer-events: none; filter: url(#hand-drawn); }
   .callout-label { font-family: 'Caveat', cursive; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
   .callout h3 { font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
-  .callout p { font-size: 15.5px; line-height: 1.7; color: var(--text); margin-bottom: 16px; max-width: 640px; }
-  .tool-links { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
-  .tool-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1.5px solid var(--accent); border-radius: 3px; font-size: 14px; color: var(--accent); text-decoration: none; transition: all 0.2s; }
-  .tool-link:hover { background: var(--accent); color: white; }
+  .callout p { font-size: 16px; line-height: 1.7; color: var(--text); margin-bottom: 16px; max-width: 820px; }
 
-  .urgency-box { background: var(--red-light); border-left: 3px solid var(--red); padding: 28px 32px; margin: 40px 0; }
+  /* ─── TOOL LINKS ─── */
+  .tool-links { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+  .tool-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1.5px solid var(--accent); border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--accent); text-decoration: none; transition: all 0.2s; background-color: transparent; cursor: pointer; }
+  .tool-link:hover { background: var(--accent); color: white; transform: translateY(-2px); }
+
+  /* ─── URGENCY BOX ─── */
+  .urgency-box { background: var(--red-light); padding: 28px 32px; margin: 40px 0; position: relative; border-radius: 4px; }
+  .urgency-box::before { content: ''; position: absolute; inset: 0; border-left: 3px solid var(--red); border-radius: 8px 255px 12px 25px / 255px 8px 225px 10px; pointer-events: none; filter: url(#hand-drawn); }
   .urgency-box h3 { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 600; color: var(--red); margin-bottom: 10px; }
   .urgency-box p { font-size: 15px; line-height: 1.7; color: var(--text); margin-bottom: 0; }
 
-  .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 30px 0; }
-  .channel { padding: 22px; border: 1.5px solid var(--lighter); border-radius: 2px; }
+  /* ─── CHANNELS ─── */
+  .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 40px 0; }
+  .channel { padding: 22px; position: relative; }
+  .channel::before { content: ''; position: absolute; inset: 0; border: 1.5px solid var(--lighter); border-radius: 255px 15px 225px 15px/15px 225px 15px 255px; pointer-events: none; filter: url(#hand-drawn); }
   .channel h4 { font-family: 'Caveat', cursive; font-size: 24px; color: var(--ink); margin-bottom: 4px; }
   .channel p { font-size: 14px; color: var(--muted); margin-bottom: 0; line-height: 1.5; }
 
-  .closing { padding: 90px 0 120px; text-align: center; }
-  .closing-quote { font-size: 20px; font-style: italic; color: var(--ink); line-height: 1.7; max-width: 600px; margin: 0 auto 50px; }
-  .closing-contact { font-size: 14px; color: var(--muted); }
-  .closing-contact strong { color: var(--ink); font-weight: 500; }
-  .closing-contact a { color: var(--accent); text-decoration: none; }
-  .closing-brand { margin-top: 30px; display: flex; justify-content: center; }
-  .closing-brand img { height: 24px; opacity: 0.4; }
+  /* ─── PROOF LIST ─── */
+  .proof-list { list-style: none; margin: 28px 0; }
+  .proof-list li { display: flex; align-items: baseline; gap: 12px; padding: 14px 0; font-size: 16px; color: var(--text); line-height: 1.6; position: relative; }
+  .proof-list li:not(:last-child)::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; border-bottom: 1.5px dashed var(--light); filter: url(#hand-drawn); }
+  .proof-label { font-family: 'Caveat', cursive; font-size: 22px; font-weight: 600; color: var(--accent); min-width: 200px; flex-shrink: 0; }
 
-  /* TOOLS GRID */
+  /* ─── TOOLS GRID ─── */
   .tools-section { background: var(--accent-pale); border-top: 1px solid var(--accent-light); border-bottom: 1px solid var(--accent-light); padding: 80px 0; }
-  .tools-section-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  .tools-section-inner { max-width: 1100px; margin: 0 auto; padding: 0 60px; }
   .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
-  .tool-card { background: white; border: 1.5px solid var(--accent-light); padding: 28px 26px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: block; position: relative; }
-  .tool-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(180,83,9,0.08); }
+  .tool-card { background: white; border: 1.5px solid var(--accent-light); padding: 28px 26px; transition: transform 0.3s ease, box-shadow 0.3s ease; text-decoration: none; color: inherit; display: block; position: relative; }
+  .tool-card:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(180,83,9,0.1); }
   .tool-card-tag { font-family: 'Caveat', cursive; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
   .tool-card h3 { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.15; }
   .tool-card p { font-size: 14px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
@@ -108,20 +123,39 @@
   .tool-card-arrow { position: absolute; right: 22px; top: 28px; font-size: 18px; color: var(--light); transition: color 0.2s; }
   .tool-card:hover .tool-card-arrow { color: var(--accent); }
 
-  .section-illustration { margin: 20px 0 40px; text-align: center; }
+  /* ─── CLOSING ─── */
+  .closing { padding: 90px 0 120px; text-align: center; }
+  .closing-quote { font-family: 'DM Sans', sans-serif; font-size: 20px; font-style: italic; color: var(--ink); line-height: 1.7; max-width: 600px; margin: 0 auto 50px; }
+  .closing-contact { font-size: 14px; color: var(--muted); }
+  .closing-contact strong { color: var(--ink); font-weight: 500; }
+  .closing-contact a { color: var(--accent); text-decoration: none; }
+  .closing-contact a:hover { text-decoration: underline; }
+  .closing-brand { margin-top: 30px; display: flex; justify-content: center; }
+  .closing-brand img { height: 24px; opacity: 0.4; }
 
-  /* PROOF ITEMS */
-  .proof-list { list-style: none; margin: 28px 0; }
-  .proof-list li { display: flex; align-items: baseline; gap: 12px; padding: 14px 0; border-bottom: 1px dashed var(--light); font-size: 15.5px; color: var(--text); line-height: 1.6; }
-  .proof-list li:last-child { border-bottom: none; }
-  .proof-label { font-family: 'Caveat', cursive; font-size: 22px; font-weight: 600; color: var(--accent); min-width: 200px; flex-shrink: 0; }
+  /* ─── PROGRESS BAR ─── */
+  .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-dark)); width: 0%; z-index: 200; transition: width 0.1s linear; }
 
-  /* SVG ANIMATIONS */
+  /* ─── HAMBURGER MENU ─── */
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; background: none; border: none; z-index: 101; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px; transition: all 0.3s ease; }
+  .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .hamburger.active span:nth-child(2) { opacity: 0; }
+  .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .mobile-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(254,254,254,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 99; flex-direction: column; justify-content: center; align-items: center; gap: 32px; opacity: 0; transition: opacity 0.3s ease; }
+  .mobile-overlay.open { display: flex; opacity: 1; }
+  .mobile-overlay a { font-family: 'Caveat', cursive; font-size: 36px; font-weight: 600; color: var(--ink); text-decoration: none; transition: color 0.2s; }
+  .mobile-overlay a:hover { color: var(--accent); }
+
+  /* ─── HAND-DRAWN FILTER ─── */
+  .sketch-filter { filter: url(#hand-drawn); }
+
+  /* ─── SVG ANIMATIONS ─── */
   @keyframes drawLine { from { stroke-dashoffset: 600; } to { stroke-dashoffset: 0; } }
   @keyframes pulse { 0%, 100% { opacity: 0.5; r: 3; } 50% { opacity: 1; r: 5; } }
   @keyframes flowDash { from { stroke-dashoffset: 14; } to { stroke-dashoffset: 0; } }
+  @keyframes dashFlow { to { stroke-dashoffset: -18; } }
   @keyframes gentleBob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-  @keyframes wiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-1.5deg); } 75% { transform: rotate(1.5deg); } }
   @keyframes fadeScale { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
 
   .hero-illustration svg .hero-line { stroke-dasharray: 600; stroke-dashoffset: 600; animation: drawLine 2s ease-out 0.6s forwards; }
@@ -134,61 +168,87 @@
   .hero-illustration svg .hero-person-2 { animation: fadeScale 0.4s ease 3.3s forwards; }
   .hero-illustration svg .hero-person-3 { animation: fadeScale 0.4s ease 3.5s forwards; }
   .hero-illustration svg .hero-label { opacity: 0; animation: fadeScale 0.4s ease 3.7s forwards; }
-
   .alert-dot { animation: pulse 2.5s ease-in-out infinite; }
-
   .layer-sketch svg { transition: transform 0.4s ease; }
   .layer:hover .layer-sketch svg { transform: rotate(-2deg) scale(1.05); }
 
-  .tool-card { transform: rotate(0deg); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-  .tool-card:nth-child(2) { transform: rotate(0.3deg); }
-  .tool-card:nth-child(3) { transform: rotate(-0.2deg); }
-  .tool-card:nth-child(5) { transform: rotate(0.4deg); }
-  .tool-card:hover { transform: translateY(-3px) rotate(0deg) !important; box-shadow: 0 12px 32px rgba(180,83,9,0.1); }
-
-  .stat { transition: transform 0.3s ease; }
-  .stat:hover { transform: translateY(-2px); }
-  .stat-number { transition: color 0.3s ease; }
-  .stat:hover .stat-number { color: var(--accent-dark); }
-
-  .channel { transition: transform 0.25s ease, border-color 0.25s ease; transform: rotate(0deg); }
-  .channel:nth-child(1) { transform: rotate(-0.3deg); }
-  .channel:nth-child(2) { transform: rotate(0.2deg); }
-  .channel:nth-child(3) { transform: rotate(0.15deg); }
-  .channel:nth-child(4) { transform: rotate(-0.25deg); }
-  .channel:hover { transform: rotate(0deg) translateY(-2px); border-color: var(--accent); }
-
-  .proof-list li { transition: padding-left 0.2s ease; }
-  .proof-list li:hover { padding-left: 6px; }
-
-  .callout { position: relative; }
-  .callout::after { content: ''; position: absolute; top: -2px; right: -2px; bottom: -2px; left: -2px; border: 1.5px solid var(--accent); opacity: 0.06; border-radius: 2px 5px 3px 4px; transform: rotate(-0.2deg); pointer-events: none; }
-
-  .urgency-box { position: relative; }
-  .urgency-box::after { content: ''; position: absolute; top: -1px; right: -1px; bottom: -1px; left: -1px; border: 1.5px solid var(--red); opacity: 0.08; border-radius: 3px 2px 4px 2px; transform: rotate(0.15deg); pointer-events: none; }
-
-  .closing-quote { position: relative; }
-  .closing-quote::before { content: '\201C'; font-family: 'Caveat', cursive; font-size: 64px; color: var(--accent); opacity: 0.15; position: absolute; top: -20px; left: -10px; line-height: 1; }
-
+  /* ─── ANIMATIONS ─── */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
   .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  @media print { nav { display: none; } .hero { padding-top: 40px; min-height: auto; } .reveal { opacity: 1; transform: none; } }
+  /* ─── PRINT ─── */
+  @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } nav { display: none; } .hero { padding-top: 40px; min-height: auto; } .reveal { opacity: 1; transform: none; } }
+
+  /* ─── LARGE DESKTOP ─── */
+  @media (min-width: 1400px) {
+    .wrap { max-width: 1200px; }
+    .stats-inner { max-width: 1200px; }
+    .tools-section-inner { max-width: 1200px; }
+    .hero h1 { font-size: 130px; }
+    .section h2 { font-size: 60px; }
+    .channel-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  /* ─── TABLET ─── */
+  @media (max-width: 1024px) {
+    .wrap { padding: 0 36px; }
+    .stats-inner { padding: 0 36px; }
+    .tools-section-inner { padding: 0 36px; }
+    .section { padding: 80px 0; }
+  }
+
+  /* ─── MOBILE ─── */
   @media (max-width: 768px) {
-    nav { padding: 14px 20px; } .nav-links a:nth-child(-n+4) { display: none; } .wrap { padding: 0 24px; }
-    .stats-inner { flex-direction: column; gap: 24px; padding: 0 24px; } .layer { flex-direction: column; gap: 12px; } .layer-sketch { width: auto; }
-    .channel-grid { grid-template-columns: 1fr; }
+    .hamburger { display: flex; }
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .wrap { padding: 0 20px; }
+    .hero { min-height: auto; padding: 100px 0 60px; }
+    .hero h1 { font-size: clamp(48px, 14vw, 72px); margin-bottom: 12px; }
+    .hero-sub { font-size: 17px; margin-bottom: 32px; }
+    .hero-illustration svg { max-width: 360px; }
+    .hero-meta { flex-direction: column; align-items: flex-start; gap: 12px; padding-top: 28px; }
+    .hero-meta-right { text-align: left; }
+    .section { padding: 60px 0; }
+    .section h2 { font-size: clamp(32px, 9vw, 42px); }
+    .section p { font-size: 15.5px; }
+    p.lead { font-size: 17px; }
+    .stats-banner { padding: 40px 0; }
+    .stats-inner { flex-direction: column; gap: 28px; padding: 0 20px; }
+    .layer { flex-direction: column; gap: 12px; margin-bottom: 32px; padding-bottom: 32px; }
+    .layer-sketch { width: auto; }
+    .layer-content h3 { font-size: 26px; }
+    .layer-content p { font-size: 15px; }
+    .channel-grid { grid-template-columns: 1fr; gap: 14px; margin: 24px 0; }
+    .tools-section-inner { padding: 0 20px; }
     .tools-grid { grid-template-columns: 1fr; }
     .proof-list li { flex-direction: column; gap: 4px; }
     .proof-label { min-width: auto; }
-    .hero-meta { flex-direction: column; gap: 12px; } .hero-meta-right { text-align: left; }
     .tool-links { flex-direction: column; }
+    .callout { padding: 24px 20px; margin: 28px 0; }
+    .urgency-box { padding: 24px 20px; }
+    .closing { padding: 60px 0 80px; }
+    .closing-quote { font-size: 17px; }
   }
 </style>
 </head>
 <body>
 
+<!-- Hidden SVG filter for hand-drawn effect -->
+<svg style="position:absolute;width:0;height:0" aria-hidden="true">
+  <defs>
+    <filter id="hand-drawn" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="4" seed="2" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ═══════ PROGRESS BAR ═══════ -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- ═══════ NAV ═══════ -->
 <nav id="nav">
   <a href="#" class="nav-logo">
     <img src="FinMango_Logo.jpg" alt="FinMango">
@@ -202,15 +262,31 @@
     <a href="https://finmango.org/barometer.html">Live Barometer</a>
     <a href="https://finmango.org">finmango.org</a>
   </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
+<!-- ═══════ MOBILE MENU ═══════ -->
+<div class="mobile-overlay" id="mobileOverlay">
+  <a href="#crisis" class="mobile-nav-link">The Crisis</a>
+  <a href="#tools" class="mobile-nav-link">Tools</a>
+  <a href="#building" class="mobile-nav-link">What We're Building</a>
+  <a href="#about" class="mobile-nav-link">About</a>
+  <a href="https://finmango.org/barometer.html" class="mobile-nav-link">Live Barometer</a>
+  <a href="https://finmango.org" class="mobile-nav-link">finmango.org</a>
+</div>
+
 <div class="wrap">
+  <!-- ═══════ HERO ═══════ -->
   <section class="hero">
     <h1>finvitals</h1>
     <div class="hero-sub">millions of people are about to lose benefits. we can see it happening. we're building the AI that reaches them first.</div>
 
     <div class="hero-illustration">
-      <svg width="480" height="160" viewBox="0 0 480 160" fill="none">
+      <svg class="sketch-filter" width="560" height="210" viewBox="0 0 480 160" fill="none">
         <!-- barometer/finvitals line — draws in -->
         <path class="hero-line" d="M30 80 L80 80 L95 40 L110 110 L125 55 L140 95 L155 65 L170 80 L220 80" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <circle class="hero-dot" cx="220" cy="80" r="4" fill="#b45309"/>
@@ -252,13 +328,13 @@
         <text class="hero-label" x="415" y="58" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">alert</text>
         <text class="hero-label" x="415" y="88" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">connect</text>
         <text class="hero-label" x="415" y="118" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">enroll</text>
-        <text class="hero-label" x="30" y="145" font-family="Caveat, cursive" font-size="15" fill="#7a7a7a">see it → stop it</text>
+        <text class="hero-label" x="30" y="145" font-family="Caveat, cursive" font-size="15" fill="#7a7a7a">see it &#x2192; stop it</text>
       </svg>
     </div>
 
     <div class="hero-meta">
       <div>
-        <p><strong>FinMango</strong> · 501(c)(3)</p>
+        <p><strong>FinMango</strong> &middot; 501(c)(3)</p>
         <p>Scott Glasgow, Founder</p>
       </div>
       <div class="hero-meta-right">
@@ -269,62 +345,77 @@
   </section>
 </div>
 
-<div class="stats-banner reveal">
+<!-- ═══════ STATS ═══════ -->
+<div class="stats-banner reveal" id="stats">
   <div class="stats-inner">
-    <div class="stat"><div class="stat-number">135K</div><div class="stat-label">Kentuckians at risk<br>of losing SNAP</div></div>
-    <div class="stat"><div class="stat-number">$140B</div><div class="stat-label">in benefits go<br>unclaimed every year</div></div>
-    <div class="stat"><div class="stat-number">age 64</div><div class="stat-label">SNAP work requirements<br>expanding under H.R. 1</div></div>
+    <div class="stat">
+      <div class="stat-number" data-target="135" data-suffix="K">0</div>
+      <div class="stat-label">Kentuckians at risk<br>of losing SNAP</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-target="140" data-prefix="$" data-suffix="B">0</div>
+      <div class="stat-label">in benefits go<br>unclaimed every year</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-target="64" data-suffix="" data-prefix="age ">0</div>
+      <div class="stat-label">SNAP work requirements<br>expanding under H.R. 1</div>
+    </div>
   </div>
 </div>
 
 <div class="wrap">
 
-  <!-- 01 THE CRISIS -->
+  <!-- ═══════ 01 · THE CRISIS ═══════ -->
   <section class="section reveal" id="crisis">
     <div class="section-label">01</div>
     <h2>H.R. 1 is happening now</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
 
-    <p class="lead">H.R. 1 just passed. It contains the largest proposed cuts to SNAP in history. Work requirements expanding to age 64. New Medicaid community engagement mandates. Millions of people are about to lose their food and health benefits — and most of them have no idea.</p>
+    <p class="lead">H.R. 1 just passed. It contains the largest proposed cuts to SNAP in history. Work requirements expanding to age 64. New Medicaid community engagement mandates. Millions of people are about to lose their food and health benefits &mdash; and most of them have no idea.</p>
 
-    <p>We know because we've been in these communities. In Wolfe County, Kentucky — where we spent two years doing field research with UVA — 135,000 people are at risk of losing SNAP. In Chicago, half of eligible seniors don't receive SNAP now; the new rules will push even more out. In Atlanta's majority-Black neighborhoods, only 38% of SNAP retailers carry fresh produce. These are communities already running on fumes. H.R. 1 is about to pull the plug.</p>
+    <p>We know because we've been in these communities. In Wolfe County, Kentucky &mdash; where we spent two years doing field research with UVA &mdash; 135,000 people are at risk of losing SNAP. In Chicago, half of eligible seniors don't receive SNAP now; the new rules will push even more out. In Atlanta's majority-Black neighborhoods, only 38% of SNAP retailers carry fresh produce. These are communities already running on fumes. H.R. 1 is about to pull the plug.</p>
 
     <div class="urgency-box reveal">
       <h3>these aren't statistics</h3>
-      <p>63% of Americans can't cover a $500 emergency. Every dollar of SNAP returns $1.54 to the economy. When someone loses benefits, they don't just go hungry — they skip their meds, fall behind on rent, end up in the ER. The programs exist. The money is there. But the people who need help the most are always the last to hear they're losing it.</p>
+      <p>63% of Americans can't cover a $500 emergency. Every dollar of SNAP returns $1.54 to the economy. When someone loses benefits, they don't just go hungry &mdash; they skip their meds, fall behind on rent, end up in the ER. The programs exist. The money is there. But the people who need help the most are always the last to hear they're losing it.</p>
     </div>
   </section>
 
-  <!-- 02 WHAT WE ALREADY BUILT -->
+  <!-- ═══════ 02 · WHAT WE ALREADY BUILT ═══════ -->
   <section class="section reveal">
     <div class="section-label">02</div>
-    <h2>what we already built</h2>
+    <h2>what we already built <span class="annotation">years of infrastructure</span></h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
 
     <p class="lead">We didn't start building when the crisis hit. This infrastructure has been running for years. FinVitals is the AI that finally makes it act.</p>
 
+    <!-- Credibility badge -->
+    <div style="display: inline-flex; align-items: center; gap: 12px; padding: 10px 20px; background: #fff; border: 1.5px solid var(--lighter); border-radius: 100px; margin-bottom: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.02);">
+      <svg fill="none" height="24" viewBox="0 0 24 24" width="24"><path d="M12 2L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-3Zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-2.33v8.02Z" fill="var(--accent)"/></svg>
+      <span style="font-family: 'DM Sans', sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); letter-spacing: 0.5px; text-transform: uppercase;">In Collaboration with the University of Virginia</span>
+    </div>
+
     <ul class="proof-list">
-      <li><span class="proof-label">Barometer</span>Tracks financial stress across all 50 states daily — anxiety, food insecurity, housing stress, affordability — from BLS, Census, HUD, FRED, and Google Trends. It can see the crisis forming right now.</li>
+      <li><span class="proof-label">Barometer</span>Tracks financial stress across all 50 states daily &mdash; anxiety, food insecurity, housing stress, affordability &mdash; from BLS, Census, HUD, FRED, and Google Trends. It can see the crisis forming right now.</li>
       <li><span class="proof-label">Food Assistance Calculator</span>Cross-program eligibility screening. One conversation checks SNAP, WIC, school meals, food pantries, and utility assistance. Already live, already serving real people.</li>
       <li><span class="proof-label">Food Desert Analyzer</span>Maps grocery access, fresh food availability, and transportation barriers by zip code. Shows exactly where food access breaks down.</li>
-      <li><span class="proof-label">Affordability Lab</span>Interactive housing affordability analysis — rent burden, income-to-housing ratios, cost-of-living pressure across U.S. communities.</li>
+      <li><span class="proof-label">Affordability Lab</span>Interactive housing affordability analysis &mdash; rent burden, income-to-housing ratios, cost-of-living pressure across U.S. communities.</li>
     </ul>
 
-    <p>So the seeing works. The connecting works. What's missing is the thing in the middle — the part that takes a Barometer signal in Wolfe County and automatically reaches every affected household with the programs they still qualify for. That's what FinVitals is.</p>
+    <p>So the seeing works. The connecting works. What's missing is the thing in the middle &mdash; the part that takes a Barometer signal in Wolfe County and automatically reaches every affected household with the programs they still qualify for. That's what FinVitals is.</p>
   </section>
 
 </div>
 
-<!-- TOOLS SHOWCASE (full-width) -->
+<!-- ═══════ TOOLS SHOWCASE ═══════ -->
 <div class="tools-section reveal" id="tools">
   <div class="tools-section-inner">
     <div class="section-label">live tools</div>
-    <h2 style="font-family:'Caveat',cursive; font-size:clamp(42px,6vw,54px); font-weight:600; color:#1a1a1a; line-height:1.05; margin-bottom:6px;">try them now</h2>
+    <h2 style="font-family:'DM Sans',sans-serif; font-size:clamp(38px,5vw,48px); letter-spacing:-1.5px; font-weight:700; color:#1a1a1a; line-height:1.05; margin-bottom:6px;">try them now</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
-    <p style="font-size:17px; color:#3a3a3a; line-height:1.75; margin-bottom:0; max-width:620px;">Every tool below is live or in prototype. This is the infrastructure FinVitals builds on — the seeing layer and the connecting layer, ready for AI to bridge them.</p>
+    <p style="font-size:17px; color:#3a3a3a; line-height:1.75; margin-bottom:0; max-width:820px;">Every tool below is live or in prototype. This is the infrastructure FinVitals builds on &mdash; the seeing layer and the connecting layer, ready for AI to bridge them.</p>
 
     <div class="tools-grid">
-      <!-- Barometer -->
       <a href="https://finmango.org/barometer.html" class="tool-card" target="_blank">
         <div class="tool-card-tag">seeing layer</div>
         <h3>Financial Health Barometer</h3>
@@ -333,7 +424,6 @@
         <span class="tool-card-arrow">&rarr;</span>
       </a>
 
-      <!-- Food Assistance Calculator -->
       <a href="https://finmango.org/food-assistance-calculator" class="tool-card" target="_blank">
         <div class="tool-card-tag">action layer</div>
         <h3>Food Assistance Calculator</h3>
@@ -342,7 +432,6 @@
         <span class="tool-card-arrow">&rarr;</span>
       </a>
 
-      <!-- Food Desert Analyzer -->
       <a href="https://finmango.org/food-desert-analyzer" class="tool-card" target="_blank">
         <div class="tool-card-tag">action layer</div>
         <h3>Food Desert Analyzer</h3>
@@ -351,7 +440,6 @@
         <span class="tool-card-arrow">&rarr;</span>
       </a>
 
-      <!-- Affordability Lab -->
       <a href="https://finmango.org/affordability-lab.html" class="tool-card" target="_blank">
         <div class="tool-card-tag">seeing layer</div>
         <h3>Affordability Lab</h3>
@@ -360,7 +448,6 @@
         <span class="tool-card-arrow">&rarr;</span>
       </a>
 
-      <!-- Disaster Aid Finder -->
       <a href="disaster-aid-finder.html" class="tool-card">
         <div class="tool-card-tag">action layer</div>
         <h3>Disaster Aid Finder</h3>
@@ -369,7 +456,6 @@
         <span class="tool-card-arrow">&rarr;</span>
       </a>
 
-      <!-- Recovery Roadmap -->
       <a href="recovery-roadmap.html" class="tool-card">
         <div class="tool-card-tag">action layer</div>
         <h3>Recovery Roadmap</h3>
@@ -383,7 +469,7 @@
 
 <div class="wrap">
 
-  <!-- 03 WHAT WE'RE BUILDING -->
+  <!-- ═══════ 03 · WHAT WE'RE BUILDING ═══════ -->
   <section class="section reveal" id="building">
     <div class="section-label">03</div>
     <h2>see it. stop it.</h2>
@@ -393,7 +479,7 @@
 
     <div class="layer reveal">
       <div class="layer-sketch">
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+        <svg class="sketch-filter" width="100" height="100" viewBox="0 0 100 100" fill="none">
           <path d="M20 70 L35 70 L42 35 L50 80 L58 50 L66 65 L74 45 L80 70" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
           <circle class="alert-dot" cx="50" cy="30" r="3" fill="#dc2626" opacity="0.7"/>
           <path d="M50 27 L50 18" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/>
@@ -403,13 +489,13 @@
       <div class="layer-content">
         <div class="layer-number">step one</div>
         <h3>see who's at risk</h3>
-        <p>The Barometer is already tracking financial stress in real time. Layer in H.R. 1 policy changes and you can see exactly who's about to lose what. Not "135,000 Kentuckians" — which families, which zip codes, which programs, by when. A spike in financial anxiety in Wolfe County plus SNAP work requirements expanding to age 64 doesn't just sit on a dashboard. It triggers the next step.</p>
+        <p>The Barometer is already tracking financial stress in real time. Layer in H.R. 1 policy changes and you can see exactly who's about to lose what. Not "135,000 Kentuckians" &mdash; which families, which zip codes, which programs, by when. A spike in financial anxiety in Wolfe County plus SNAP work requirements expanding to age 64 doesn't just sit on a dashboard. It triggers the next step.</p>
       </div>
     </div>
 
     <div class="layer reveal">
       <div class="layer-sketch">
-        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+        <svg class="sketch-filter" width="100" height="100" viewBox="0 0 100 100" fill="none">
           <circle cx="35" cy="40" r="10" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
           <path d="M35 50 L35 70" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
           <path d="M35 58 L28 66" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
@@ -424,75 +510,156 @@
       <div class="layer-content">
         <div class="layer-number">step two</div>
         <h3>reach them first</h3>
-        <p>Once you know who's at risk, reach them — with the exact programs they still qualify for, before the deadline. The Food Assistance Calculator and Food Desert Analyzer stop being things people have to find and start finding people. One conversation. Every alternative. Personalized to where they live and what they're about to lose. The goal is simple: nobody falls off a cliff because nobody told them there was a bridge.</p>
+        <p>Once you know who's at risk, reach them &mdash; with the exact programs they still qualify for, before the deadline. The Food Assistance Calculator and Food Desert Analyzer stop being things people have to find and start finding people. One conversation. Every alternative. Personalized to where they live and what they're about to lose. The goal is simple: nobody falls off a cliff because nobody told them there was a bridge.</p>
       </div>
     </div>
   </section>
 
-  <!-- 04 WHY THIS MATTERS FOR GOVERNMENT -->
+  <!-- ═══════ 04 · GOVERNMENT ═══════ -->
   <section class="section reveal">
     <div class="section-label">04</div>
     <h2>the tool states need right now</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
 
-    <p class="lead">Talk to any state SNAP or Medicaid director right now. They're drowning. H.R. 1 requires them to notify affected households — but they don't have anything close to the tools they'd need to actually do it.</p>
+    <p class="lead">Talk to any state SNAP or Medicaid director right now. They're drowning. H.R. 1 requires them to notify affected households &mdash; but they don't have anything close to the tools they'd need to actually do it.</p>
 
     <p>Every state faces the same thing: they know the rules are changing, they know people will fall off, and they have no way to figure out who or reach them before it happens. Caseworkers are already buried. The legacy systems weren't built for this. Nobody's is.</p>
 
     <p>FinVitals gives them what they've never had:</p>
 
     <div class="channel-grid">
-      <div class="channel"><h4>real-time visibility</h4><p>See financial stress across your state as it's happening — not six months later in an annual report</p></div>
-      <div class="channel"><h4>predictive targeting</h4><p>Know exactly which households are at risk of losing benefits under H.R. 1 — and what alternatives exist for each one</p></div>
-      <div class="channel"><h4>automatic outreach</h4><p>Reach affected people with the specific programs they qualify for — without overwhelming caseworker teams</p></div>
+      <div class="channel"><h4>real-time visibility</h4><p>See financial stress across your state as it's happening &mdash; not six months later in an annual report</p></div>
+      <div class="channel"><h4>predictive targeting</h4><p>Know exactly which households are at risk of losing benefits under H.R. 1 &mdash; and what alternatives exist for each one</p></div>
+      <div class="channel"><h4>automatic outreach</h4><p>Reach affected people with the specific programs they qualify for &mdash; without overwhelming caseworker teams</p></div>
       <div class="channel"><h4>ready to deploy</h4><p>Runs through existing infrastructure: state health departments, SNAP offices, 211 centers, public libraries. Zero new systems to build</p></div>
     </div>
   </section>
 
-  <!-- 05 ABOUT + FUNDING -->
+  <!-- ═══════ 05 · ABOUT + FUNDING ═══════ -->
   <section class="section reveal" id="about">
     <div class="section-label">05</div>
     <h2>about FinMango</h2>
     <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
 
-    <p>I started FinMango in 2017 as a 501(c)(3) with one belief: financial health is a right, not a privilege. What started as a classroom project at Kent State has reached over 1 million people across 100+ countries. We published with Google Health in Nature. We spent two years in the field with UVA across five communities — including the ones H.R. 1 is about to hit hardest.</p>
+    <p>I started FinMango in 2017 as a 501(c)(3) with one belief: financial health is a right, not a privilege. What started as a classroom project at Kent State has reached over 1 million people across 100+ countries. We published with Google Health in Nature. We spent two years in the field with UVA across five communities &mdash; including the ones H.R. 1 is about to hit hardest.</p>
 
-    <p>Our partners include Google Health, the WHO, the World Bank, and the IMF. Everything we build is open source. The Barometer, the Calculator, the Analyzer — all live, all free. FinVitals isn't a new idea. It's the thing we've been building toward for years. The crisis just made it urgent.</p>
+    <p>Our partners include Google Health, the WHO, the World Bank, and the IMF. Everything we build is open source. The Barometer, the Calculator, the Analyzer &mdash; all live, all free. FinVitals isn't a new idea. It's the thing we've been building toward for years. The crisis just made it urgent.</p>
 
     <div class="callout reveal">
       <div class="callout-label">the ask</div>
       <h3>$2M over 18 months</h3>
-      <p>Connect the Barometer to the Calculator with AI. Pilot with 2–3 states where we already have research on the ground — Kentucky, Georgia, Illinois, Ohio, Idaho. Scale to 10+ states. Open-source everything so anyone can run it.</p>
+      <p>Connect the Barometer to the Calculator with AI. Pilot with 2&ndash;3 states where we already have research on the ground &mdash; Kentucky, Georgia, Illinois, Ohio, Idaho. Scale to 10+ states. Open-source everything so anyone can run it.</p>
       <p>The infrastructure is built. The data is flowing. The crisis is here. We just need the AI to close the loop before the deadlines do.</p>
     </div>
   </section>
 
-  <!-- CLOSING -->
+  <!-- ═══════ CLOSING ═══════ -->
   <section class="closing reveal">
-    <svg width="200" height="60" viewBox="0 0 200 60" fill="none" style="display:block; margin:0 auto 30px;">
-      <path d="M10 30 L40 30 L50 10 L60 45 L70 20 L80 35 L90 25 L100 30 L130 30" stroke="#b45309" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="130" cy="30" r="3" fill="#b45309"/>
-      <path d="M138 30 L160 30" stroke="#b45309" stroke-width="1.2" stroke-dasharray="4 3"/>
-      <circle cx="175" cy="30" r="10" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
-      <path d="M172 34 C173 37, 177 37, 178 34" stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    <svg class="sketch-filter" width="260" height="130" viewBox="0 0 260 130" fill="none" style="display:block; margin:0 auto 40px;">
+      <!-- Person with barometer line -->
+      <path d="M84 38 C84 31, 79 24, 70 25 C62 25, 56 31, 57 39 C57 46, 62 52, 71 52 C79 51, 84 45, 84 38" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M70 52 C70.5 62, 69.5 76, 70.5 87" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <path d="M70 65 C65 69, 58 74, 54 79" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M70 63 C76 67, 83 71, 89 74" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M70.5 87 C67 97, 62 107, 57 115" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <path d="M70.5 87 C74 97, 78 106, 83 114" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <!-- Barometer line between them -->
+      <path d="M100 65 L115 65 L122 45 L130 75 L138 55 L146 68 L154 58 L160 65" stroke="#b45309" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Person being reached -->
+      <path d="M204 38 C204 31, 198 24, 190 25 C182 26, 177 32, 177 39 C178 46, 183 52, 191 51 C199 51, 204 45, 204 38" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M184 43 C186 47, 194 47, 196 43" stroke="#1a1a1a" stroke-width="1" fill="none" stroke-linecap="round"/>
+      <path d="M190 52 C190.5 62, 189.5 76, 190.5 87" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <path d="M190 64 C184 68, 177 72, 171 76" stroke="#1a1a1a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      <path d="M190 65 C196 69, 201 73, 206 77" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M190.5 87 C187 97, 182 107, 177 115" stroke="#1a1a1a" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+      <path d="M190.5 87 C194 96, 198 106, 203 114" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      <!-- Checkmark shield -->
+      <path d="M125 18 C125 12, 130 8, 135 13 C140 8, 145 12, 145 18 C145 26, 135 32, 135 32 C135 32, 125 26, 125 18Z" stroke="#b45309" stroke-width="1.2" fill="#b45309" opacity="0.15"/>
     </svg>
 
     <p class="closing-quote">Somewhere in Wolfe County right now, someone is about to lose their SNAP benefits and has no idea. We can already see it happening. We already have the tools to help them. We just need to connect those two things before the deadline does the damage. That's FinVitals.</p>
 
     <svg width="100" height="8" viewBox="0 0 100 8" style="display:block; margin: 0 auto 30px;"><path d="M10 4 C25 0, 35 8, 50 4 C65 0, 75 8, 90 4" stroke="#b45309" stroke-width="1.2" fill="none" opacity="0.4"/></svg>
 
-    <p class="closing-contact"><strong>Scott Glasgow</strong> · FinMango · <a href="https://finmango.org">finmango.org</a></p>
+    <div style="margin-bottom: 40px;">
+      <a href="mailto:scott@finmango.org?subject=FinVitals%20Partnership" class="tool-link" style="font-size: 16px; padding: 14px 28px;">
+        Become a Pilot Partner &rarr;
+      </a>
+    </div>
+
+    <p class="closing-contact"><strong>Scott Glasgow</strong> &middot; FinMango &middot; <a href="https://finmango.org">finmango.org</a></p>
     <div class="closing-brand"><img src="FinMango_Logo.jpg" alt="FinMango"></div>
   </section>
 
 </div>
 
 <script>
+  // ─── Reveal on scroll ───
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40); });
+
+  // ─── Progress bar + nav scroll ───
+  const progressBar = document.getElementById('progressBar');
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+  });
+
+  // ─── Hamburger menu ───
+  const hamburger = document.getElementById('hamburger');
+  const mobileOverlay = document.getElementById('mobileOverlay');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    mobileOverlay.classList.toggle('open');
+    document.body.style.overflow = mobileOverlay.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('.mobile-nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      mobileOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ─── Animated stat counters ───
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const decimals = parseInt(el.dataset.decimals) || 0;
+    const duration = 1800;
+    const startTime = performance.now();
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = eased * target;
+      if (decimals > 0) {
+        el.textContent = prefix + current.toFixed(decimals) + suffix;
+      } else {
+        el.textContent = prefix + Math.floor(current) + suffix;
+      }
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  let statsAnimated = false;
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !statsAnimated) {
+        statsAnimated = true;
+        document.querySelectorAll('.stat-number[data-target]').forEach(el => animateCounter(el));
+      }
+    });
+  }, { threshold: 0.3 });
+  const statsSection = document.getElementById('stats');
+  if (statsSection) statsObserver.observe(statsSection);
 </script>
 
 </body>
