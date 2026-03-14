@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FinVitals — Financial Health Intelligence for Government | FinMango</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --accent: #b45309;
+    --accent-dark: #92400e;
+    --accent-light: #fef3c7;
+    --accent-pale: #fffbeb;
+    --teal: #0f766e;
+    --teal-light: #ccfbf1;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --ink: #1a1a1a;
+    --text: #3a3a3a;
+    --muted: #7a7a7a;
+    --light: #d0d0d0;
+    --lighter: #e8e8e8;
+    --bg: #fefefe;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; font-size: 17px; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(254,254,254,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid transparent; transition: border-color 0.3s; }
+  nav.scrolled { border-bottom-color: var(--lighter); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo img { height: 26px; }
+  .nav-logo span { font-family: 'Caveat', cursive; font-size: 16px; color: var(--muted); padding-left: 10px; border-left: 1px solid var(--lighter); }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { font-size: 13.5px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .wrap { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+
+  .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 120px 0 80px; }
+  .hero h1 { font-family: 'Caveat', cursive; font-size: clamp(72px, 10vw, 100px); font-weight: 700; color: var(--ink); line-height: 0.9; margin-bottom: 16px; opacity: 0; animation: fadeUp 0.8s ease forwards; }
+  .hero-sub { font-size: clamp(18px, 2.5vw, 21px); color: var(--accent); font-weight: 400; margin-bottom: 50px; letter-spacing: 0.3px; opacity: 0; animation: fadeUp 0.8s ease 0.12s forwards; }
+  .hero-illustration { opacity: 0; animation: fadeUp 0.8s ease 0.24s forwards; }
+  .hero-meta { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 40px; border-top: 1.5px solid var(--lighter); opacity: 0; animation: fadeUp 0.8s ease 0.36s forwards; }
+  .hero-meta p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .hero-meta strong { color: var(--ink); font-weight: 500; }
+  .hero-meta-right { text-align: right; }
+
+  .section { padding: 90px 0; }
+  .section-label { font-family: 'Caveat', cursive; font-size: 16px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .section h2 { font-family: 'Caveat', cursive; font-size: clamp(42px, 6vw, 54px); font-weight: 600; color: var(--ink); line-height: 1.05; margin-bottom: 10px; }
+  .section p { font-size: 17px; line-height: 1.75; color: var(--text); margin-bottom: 20px; max-width: 680px; }
+  p.lead { font-size: 20px; color: var(--ink); font-weight: 400; line-height: 1.65; margin-bottom: 28px; }
+  .wavy { display: block; margin: 6px 0 28px; opacity: 0.5; }
+
+  .stats-banner { background: var(--accent-pale); border-top: 1px solid var(--accent-light); border-bottom: 1px solid var(--accent-light); padding: 56px 0; }
+  .stats-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; display: flex; gap: 20px; justify-content: space-between; }
+  .stat { text-align: center; flex: 1; }
+  .stat-number { font-family: 'Caveat', cursive; font-size: clamp(42px, 5vw, 56px); font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+  .stat-label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  .layer { display: flex; gap: 28px; align-items: flex-start; margin-bottom: 48px; padding-bottom: 48px; border-bottom: 1px dashed var(--light); }
+  .layer:last-child { border-bottom: none; }
+  .layer-sketch { flex-shrink: 0; width: 110px; display: flex; align-items: center; justify-content: center; }
+  .layer-content { flex: 1; }
+  .layer-number { font-family: 'Caveat', cursive; font-size: 15px; color: var(--muted); margin-bottom: 2px; }
+  .layer-content h3 { font-family: 'Caveat', cursive; font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1.1; margin-bottom: 10px; }
+  .layer-content p { font-size: 15.5px; max-width: 560px; }
+
+  .callout { background: var(--accent-pale); border-left: 3px solid var(--accent); padding: 32px 36px; margin: 44px 0; }
+  .callout-label { font-family: 'Caveat', cursive; font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin-bottom: 10px; }
+  .callout h3 { font-family: 'Caveat', cursive; font-size: 30px; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+  .callout p { font-size: 15.5px; line-height: 1.7; color: var(--text); margin-bottom: 16px; max-width: 640px; }
+  .tool-links { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+  .tool-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1.5px solid var(--accent); border-radius: 3px; font-size: 14px; color: var(--accent); text-decoration: none; transition: all 0.2s; }
+  .tool-link:hover { background: var(--accent); color: white; }
+
+  .urgency-box { background: var(--red-light); border-left: 3px solid var(--red); padding: 28px 32px; margin: 40px 0; }
+  .urgency-box h3 { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 600; color: var(--red); margin-bottom: 10px; }
+  .urgency-box p { font-size: 15px; line-height: 1.7; color: var(--text); margin-bottom: 0; }
+
+  .pillars { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin: 40px 0; }
+  .pillar { padding: 28px 24px; position: relative; }
+  .pillar::before { content: ''; position: absolute; inset: 0; border: 1.5px solid var(--ink); border-radius: 3px 6px 2px 5px; opacity: 0.06; transform: rotate(-0.3deg); }
+  .pillar h4 { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .pillar p { font-size: 14.5px; color: var(--text); line-height: 1.6; margin-bottom: 0; }
+
+  .channel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 30px 0; }
+  .channel { padding: 22px; border: 1.5px solid var(--lighter); border-radius: 2px; }
+  .channel h4 { font-family: 'Caveat', cursive; font-size: 24px; color: var(--ink); margin-bottom: 4px; }
+  .channel p { font-size: 14px; color: var(--muted); margin-bottom: 0; line-height: 1.5; }
+
+  .metric-row { display: flex; gap: 20px; align-items: baseline; padding: 20px 0; border-bottom: 1px dashed var(--light); }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-name { font-family: 'Caveat', cursive; font-size: 28px; font-weight: 600; color: var(--accent); min-width: 140px; flex-shrink: 0; }
+  .metric-desc { font-size: 15px; color: var(--text); line-height: 1.6; }
+
+  .timeline-phase { display: flex; gap: 28px; align-items: flex-start; padding: 28px 0; border-bottom: 1px dashed var(--light); }
+  .timeline-phase:last-child { border-bottom: none; }
+  .phase-label { font-family: 'Caveat', cursive; font-size: 32px; font-weight: 700; color: var(--accent); min-width: 100px; flex-shrink: 0; }
+  .phase-time { font-family: 'Caveat', cursive; font-size: 20px; color: var(--muted); min-width: 110px; flex-shrink: 0; padding-top: 8px; }
+  .phase-desc { font-size: 15px; color: var(--text); line-height: 1.65; padding-top: 6px; }
+
+  .closing { padding: 90px 0 120px; text-align: center; }
+  .closing-quote { font-size: 20px; font-style: italic; color: var(--ink); line-height: 1.7; max-width: 600px; margin: 0 auto 50px; }
+  .closing-contact { font-size: 14px; color: var(--muted); }
+  .closing-contact strong { color: var(--ink); font-weight: 500; }
+  .closing-contact a { color: var(--accent); text-decoration: none; }
+  .closing-brand { margin-top: 30px; display: flex; justify-content: center; }
+  .closing-brand img { height: 24px; opacity: 0.4; }
+
+  .section-illustration { margin: 20px 0 40px; text-align: center; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  @media print { nav { display: none; } .hero { padding-top: 40px; min-height: auto; } .reveal { opacity: 1; transform: none; } }
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; } .nav-links a:nth-child(-n+4) { display: none; } .wrap { padding: 0 24px; }
+    .stats-inner { flex-direction: column; gap: 24px; padding: 0 24px; } .layer { flex-direction: column; gap: 12px; } .layer-sketch { width: auto; }
+    .pillars { grid-template-columns: 1fr; } .channel-grid { grid-template-columns: 1fr; }
+    .metric-row, .timeline-phase { flex-direction: column; gap: 4px; }
+    .metric-name, .phase-label, .phase-time { min-width: auto; }
+    .hero-meta { flex-direction: column; gap: 12px; } .hero-meta-right { text-align: left; }
+    .tool-links { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo">
+    <img src="FinMango_Logo.jpg" alt="FinMango">
+    <span>finvitals</span>
+  </a>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#solution">How It Works</a>
+    <a href="#impact">Impact</a>
+    <a href="https://finmango.org/barometer.html">Live Barometer</a>
+    <a href="https://finmango.org">finmango.org</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="hero">
+    <h1>finvitals</h1>
+    <div class="hero-sub">governments can't protect what they can't see.</div>
+
+    <div class="hero-illustration">
+      <svg width="480" height="160" viewBox="0 0 480 160" fill="none">
+        <!-- barometer/finvitals line -->
+        <path d="M30 80 L80 80 L95 40 L110 110 L125 55 L140 95 L155 65 L170 80 L220 80" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="220" cy="80" r="4" fill="#b45309"/>
+        <!-- dotted line to AI brain -->
+        <path d="M228 80 L280 80" stroke="#b45309" stroke-width="1.5" stroke-dasharray="5 4" fill="none"/>
+        <!-- AI "brain" / processor -->
+        <rect x="284" y="60" width="40" height="40" rx="6" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
+        <path d="M296 72 L296 88 M304 72 L304 88 M312 72 L312 88" stroke="#b45309" stroke-width="1.2" stroke-linecap="round" opacity="0.5"/>
+        <path d="M290 80 L284 80 M318 80 L324 80 M304 56 L304 60 M304 100 L304 104" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round"/>
+        <text x="289" y="84" font-family="Caveat, cursive" font-size="13" fill="#b45309">AI</text>
+        <!-- arrows out to people -->
+        <path d="M328 70 C345 55, 360 60, 380 50" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <path d="M328 80 L380 80" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <path d="M328 90 C345 105, 360 100, 380 110" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>
+        <!-- people -->
+        <circle cx="400" cy="42" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+        <path d="M400 51 L400 70" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M400 58 L393 66" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M400 58 L407 64" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="400" cy="72" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+        <path d="M400 81 L400 100" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M400 88 L393 96" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M400 88 L407 94" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <circle cx="400" cy="102" r="9" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+        <path d="M400 111 L400 130" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M400 118 L393 126" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <path d="M400 118 L407 124" stroke="#1a1a1a" stroke-width="1.3" stroke-linecap="round"/>
+        <!-- labels -->
+        <text x="415" y="58" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">alert</text>
+        <text x="415" y="88" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">connect</text>
+        <text x="415" y="118" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">enroll</text>
+        <text x="30" y="145" font-family="Caveat, cursive" font-size="15" fill="#7a7a7a">real-time data → AI intelligence → people reached</text>
+      </svg>
+    </div>
+
+    <div class="hero-meta">
+      <div>
+        <p><strong>FinMango</strong> · 501(c)(3)</p>
+        <p>Scott Glasgow, Founder</p>
+      </div>
+      <div class="hero-meta-right">
+        <p><strong>Google.org Impact Challenge</strong></p>
+        <p>AI for Government Innovation</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="stats-banner reveal">
+  <div class="stats-inner">
+    <div class="stat"><div class="stat-number">63%</div><div class="stat-label">of Americans can't cover<br>a $500 emergency</div></div>
+    <div class="stat"><div class="stat-number">$140B</div><div class="stat-label">in benefits go<br>unclaimed every year</div></div>
+    <div class="stat"><div class="stat-number">0</div><div class="stat-label">governments have real-time<br>financial health visibility</div></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- 01 PROBLEM -->
+  <section class="section reveal" id="problem">
+    <div class="section-label">01</div>
+    <h2>the problem</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
+
+    <p class="lead">Right now, no government agency in the country has a real-time view of their population's financial health. They find out people are struggling after they've already lost housing, skipped medications, and fallen off benefits.</p>
+
+    <p>Unemployment data lags by months. Poverty data updates annually. SNAP enrollment numbers get counted after people are already in crisis. By the time a state sees the problem, the damage is done.</p>
+
+    <p>And it's about to get worse. H.R. 1 just introduced the largest proposed cuts to SNAP in history, expanded work requirements to age 64, and imposed new Medicaid community engagement requirements. Millions of people are at risk of losing benefits — and most of them don't know it yet.</p>
+
+    <div class="urgency-box reveal">
+      <h3>happening right now</h3>
+      <p>135,000 Kentuckians at risk of losing SNAP. SNAP work requirements expanding to age 64. Medicaid community engagement mandates rolling out state by state. States are scrambling to implement changes they don't have the tools to manage. The people affected are the last to find out.</p>
+    </div>
+
+    <p>The programs exist. The funding exists. But governments can't protect people they can't see — and they can't reach people fast enough with the tools they have.</p>
+  </section>
+
+  <!-- 02 WHAT WE ALREADY BUILT -->
+  <section class="section reveal">
+    <div class="section-label">02</div>
+    <h2>what we already built</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
+
+    <p class="lead">FinMango has spent years building the infrastructure for this. FinVitals is the AI layer that turns it into an engine.</p>
+
+    <div class="callout reveal">
+      <div class="callout-label">live now</div>
+      <h3>Financial Health Barometer</h3>
+      <p>A real-time dashboard tracking four dimensions of financial stress — financial anxiety, food insecurity, housing stress, and affordability — across all 50 states. Pulls from BLS, Census, HUD, FRED, Harvard JCHS, and Google Trends daily. Open source. Published methodology. Academic-grade citation format. Already on our homepage.</p>
+      <p>This is the surveillance layer. It sees the crisis forming. What it can't do yet is <em>act</em> on what it sees.</p>
+      <div class="tool-links">
+        <a href="https://finmango.org/barometer.html" class="tool-link" target="_blank">Live Barometer →</a>
+        <a href="https://finmango.org/food-assistance-calculator" class="tool-link" target="_blank">Food Assistance Calculator →</a>
+        <a href="https://finmango.org/food-desert-analyzer" class="tool-link" target="_blank">Food Desert Analyzer →</a>
+      </div>
+    </div>
+
+    <p>On top of that: a <strong>Food Assistance Calculator</strong> that checks SNAP, WIC, and pantry eligibility at once. A <strong>Food Desert Analyzer</strong> that maps grocery access barriers by zip code. Two years of field research across five U.S. communities with the University of Virginia. A Google Health partnership published in Nature. Open-source datasets covering 22,000+ locations across 190 countries.</p>
+
+    <p>The pieces are all there. FinVitals connects them with AI.</p>
+  </section>
+
+  <!-- 03 SOLUTION -->
+  <section class="section reveal" id="solution">
+    <div class="section-label">03</div>
+    <h2>how finvitals works</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
+
+    <p class="lead">FinVitals adds an AI intelligence layer on top of FinMango's existing infrastructure — turning a dashboard into an early warning system that predicts, identifies, connects, and monitors.</p>
+
+    <div class="layer reveal">
+      <div class="layer-sketch">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <path d="M20 70 L35 70 L42 35 L50 80 L58 50 L66 65 L74 45 L80 70" stroke="#b45309" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="50" cy="30" r="3" fill="#dc2626" opacity="0.7"/>
+          <path d="M50 27 L50 18" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/>
+          <text x="22" y="92" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">early warning</text>
+        </svg>
+      </div>
+      <div class="layer-content">
+        <div class="layer-number">layer one</div>
+        <h3>predict</h3>
+        <p>AI analyzes Barometer signals and identifies which communities are approaching crisis before they hit it. A spike in financial anxiety in Wolfe County plus rising housing stress plus incoming SNAP policy changes doesn't just show up on a dashboard — it triggers an alert. Governments see the problem forming, not after it's arrived.</p>
+      </div>
+    </div>
+
+    <div class="layer reveal">
+      <div class="layer-sketch">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="45" r="25" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
+          <circle cx="42" cy="38" r="3" fill="#b45309" opacity="0.7"/>
+          <circle cx="55" cy="52" r="3" fill="#b45309" opacity="0.7"/>
+          <circle cx="60" cy="40" r="3" fill="#b45309" opacity="0.7"/>
+          <circle cx="45" cy="55" r="3" fill="#b45309" opacity="0.7"/>
+          <line x1="50" y1="70" x2="50" y2="80" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round"/>
+          <text x="25" y="92" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">who's at risk?</text>
+        </svg>
+      </div>
+      <div class="layer-content">
+        <div class="layer-number">layer two</div>
+        <h3>identify</h3>
+        <p>Cross-reference population-level signals with eligibility data to identify who specifically is at risk. When H.R. 1 work requirements expand to age 64, FinVitals models which households in which zip codes are affected, what benefits they'll lose, and what alternatives exist. Not "135,000 Kentuckians" — but which ones, where, and what they need.</p>
+      </div>
+    </div>
+
+    <div class="layer reveal">
+      <div class="layer-sketch">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <circle cx="35" cy="40" r="10" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+          <path d="M35 50 L35 70" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M35 58 L28 66" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M35 58 L45 55" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="52" y="38" width="30" height="22" rx="3" stroke="#b45309" stroke-width="1.5" fill="none"/>
+          <path d="M58 46 L60 48 L64 44" stroke="#b45309" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <path d="M58 52 L75 52" stroke="#b45309" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+          <path d="M45 55 L52 49" stroke="#b45309" stroke-width="1.2" stroke-dasharray="3 2"/>
+          <text x="25" y="92" font-family="Caveat, cursive" font-size="13" fill="#7a7a7a">reach them</text>
+        </svg>
+      </div>
+      <div class="layer-content">
+        <div class="layer-number">layer three</div>
+        <h3>connect</h3>
+        <p>Proactively reach affected households with the specific programs they qualify for. This is where the Food Assistance Calculator and Food Desert Analyzer become action tools — triggered by the intelligence layer, not waiting for someone to find them. One conversation, every program, personalized to their situation and location.</p>
+      </div>
+    </div>
+
+    <div class="layer reveal">
+      <div class="layer-sketch">
+        <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <path d="M25 60 C25 38, 40 28, 50 28 C60 28, 75 38, 75 60 L25 60Z" stroke="#1a1a1a" stroke-width="1.8" fill="none"/>
+          <line x1="22" y1="60" x2="78" y2="60" stroke="#1a1a1a" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M50 24 L50 18" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M44 64 C44 70, 56 70, 56 64" stroke="#1a1a1a" stroke-width="1.5" fill="none"/>
+          <path d="M72 40 C78 38, 80 44, 76 48" stroke="#b45309" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <path d="M78 35 C86 32, 90 42, 84 50" stroke="#b45309" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+          <text x="18" y="86" font-family="Caveat, cursive" font-size="12" fill="#7a7a7a">policy changed!</text>
+        </svg>
+      </div>
+      <div class="layer-content">
+        <div class="layer-number">layer four</div>
+        <h3>monitor</h3>
+        <p>Track policy changes — H.R. 1, SNAP work requirements, Medicaid shifts, state-level emergency funds — and model their impact on communities in real time. Alert governments and affected households before changes take effect. Nobody gets caught off guard. The Barometer becomes a living policy impact simulator.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 WHY IT MATTERS -->
+  <section class="section reveal">
+    <div class="section-label">04</div>
+    <h2>health, resilience, economy. same problem.</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
+
+    <p class="lead">Financial health isn't a category. It's the foundation everything else depends on. When it breaks, health, resilience, and economy break together.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <h4>health</h4>
+        <p>56% of young adults report financial stress impacting mental health. When people lose benefits, they skip medications, miss appointments, and end up in emergency rooms. The Barometer already tracks financial anxiety alongside our Google Health partnership published in Nature.</p>
+      </div>
+      <div class="pillar">
+        <h4>resilience</h4>
+        <p>Communities that can't absorb a financial shock can't recover from anything — policy changes, economic downturns, natural disasters. FinVitals is an early warning system that catches the crisis forming and activates support before communities break.</p>
+      </div>
+      <div class="pillar">
+        <h4>economy</h4>
+        <p>$140 billion in benefits go unclaimed every year. Every dollar of SNAP benefits returns $1.54 in GDP. FinVitals doesn't just help people — it unlocks economic stimulus that's already funded and sitting on the table.</p>
+      </div>
+    </div>
+
+    <p>This is FinMango's thesis: financial health must come before financial education. You can't teach budgeting to someone who can't cover a $500 emergency. You have to stabilize them first. FinVitals is how governments do that at population scale.</p>
+  </section>
+
+  <!-- 05 GOVERNMENT PARTNERSHIP -->
+  <section class="section reveal">
+    <div class="section-label">05</div>
+    <h2>what governments get</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
+
+    <p>State SNAP and Medicaid directors right now are overwhelmed by H.R. 1 implementation. They have a legal obligation to notify affected households. They don't have the tools to do it effectively. FinVitals gives them three things they've never had:</p>
+
+    <div class="channel-grid">
+      <div class="channel"><h4>real-time visibility</h4><p>See financial stress across your state as it's happening — not six months later in an annual report</p></div>
+      <div class="channel"><h4>predictive intelligence</h4><p>Know which communities are approaching crisis before they hit it, so you can act instead of react</p></div>
+      <div class="channel"><h4>automatic outreach</h4><p>Reach affected households with the specific programs they qualify for — without overwhelming caseworker teams</p></div>
+      <div class="channel"><h4>policy impact modeling</h4><p>See exactly how proposed changes will hit your communities before implementation, not after</p></div>
+    </div>
+
+    <p>Deployment runs through existing infrastructure: state health departments, SNAP offices, 211 centers, public libraries, school districts. Zero new systems to build. FinVitals plugs into what's already there.</p>
+  </section>
+
+  <!-- 06 IMPACT -->
+  <section class="section reveal" id="impact">
+    <div class="section-label">06</div>
+    <h2>measurable impact</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
+
+    <div>
+      <div class="metric-row"><div class="metric-name">early warning</div><div class="metric-desc">How many weeks/months before crisis does FinVitals detect it? Measured against traditional lagging indicators.</div></div>
+      <div class="metric-row"><div class="metric-name">retention</div><div class="metric-desc">How many people maintain benefits through policy transitions who would have lost them without proactive alerts?</div></div>
+      <div class="metric-row"><div class="metric-name">dollars found</div><div class="metric-desc">Total unclaimed benefits accessed by households reached through FinVitals's connect layer.</div></div>
+      <div class="metric-row"><div class="metric-name">health outcomes</div><div class="metric-desc">Reduction in ER visits and mental health crises driven by benefit loss. Financial stability = health stability.</div></div>
+      <div class="metric-row"><div class="metric-name">equity</div><div class="metric-desc">Are we closing disparities in who gets reached? FinVitals tracks outcomes by income, race, geography, and age.</div></div>
+    </div>
+  </section>
+
+  <!-- 07 ABOUT -->
+  <section class="section reveal">
+    <div class="section-label">07</div>
+    <h2>about FinMango</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#1a1a1a" stroke-width="1.2" fill="none"/></svg>
+
+    <p>FinMango is a 501(c)(3) I founded in 2017 with one idea: financial health is a right, not a privilege. What started as a classroom project at Kent State has reached over a million people across 100+ countries.</p>
+
+    <p>We do three things: research (with partners like Google Health, WHO, World Bank, and the IMF), education (75,000+ students in Northeast Ohio), and advocacy (a global ambassador network driving policy change). Everything we build is open source. We publish our data, our methodology, and our tools so anyone can use them.</p>
+
+    <p>The Financial Health Barometer, the Food Assistance Calculator, the Food Desert Analyzer, five community case studies with the University of Virginia, publications in Nature and the American Journal of Health Education — FinVitals doesn't start from scratch. It's the AI layer that makes everything we've built actually work at the scale the crisis demands.</p>
+  </section>
+
+  <!-- 08 TIMELINE -->
+  <section class="section reveal">
+    <div class="section-label">08</div>
+    <h2>funding & timeline</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
+
+    <p class="lead">We're requesting $2M from Google.org to build the AI intelligence layer on top of our existing infrastructure and deploy with state government partners over 18 months.</p>
+
+    <div>
+      <div class="timeline-phase">
+        <div class="phase-label">build</div>
+        <div class="phase-time">months 1–6</div>
+        <div class="phase-desc">Add predictive AI to the Financial Health Barometer. Build the identification engine that maps population signals to household-level risk. Integrate the connect layer with existing Food Assistance Calculator and Food Desert Analyzer. Onboard 2–3 state government partners for pilot — prioritizing states implementing H.R. 1 changes where we have existing research (Kentucky, Georgia, Idaho, Ohio, Illinois).</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="phase-label">deploy</div>
+        <div class="phase-time">months 7–12</div>
+        <div class="phase-desc">Pilot with partner states. Policy monitor (Layer 4) live — tracking SNAP, Medicaid, and housing policy changes and modeling community impact. Proactive household outreach operational through 211 centers, health departments, and libraries. Real-time impact measurement against baseline indicators.</div>
+      </div>
+      <div class="timeline-phase">
+        <div class="phase-label">scale</div>
+        <div class="phase-time">months 13–18</div>
+        <div class="phase-desc">Expand to 10+ states. Open-source the predictive model and Barometer AI layer so any government or nonprofit can deploy it. Publish impact report. International adaptation framework — the Barometer methodology already covers 190 countries through our Google Health datasets.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="closing reveal">
+    <svg width="200" height="60" viewBox="0 0 200 60" fill="none" style="display:block; margin:0 auto 30px;">
+      <path d="M10 30 L40 30 L50 10 L60 45 L70 20 L80 35 L90 25 L100 30 L130 30" stroke="#b45309" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="130" cy="30" r="3" fill="#b45309"/>
+      <path d="M138 30 L160 30" stroke="#b45309" stroke-width="1.2" stroke-dasharray="4 3"/>
+      <circle cx="175" cy="30" r="10" stroke="#1a1a1a" stroke-width="1.3" fill="none"/>
+      <path d="M172 34 C173 37, 177 37, 178 34" stroke="#1a1a1a" stroke-width="0.9" fill="none" stroke-linecap="round"/>
+    </svg>
+
+    <p class="closing-quote">$140 billion in benefits go unclaimed every year. Not because people don't need them. Because nobody's watching, nobody's warning, and nobody's connecting them to what they've already earned. FinVitals changes that.</p>
+
+    <svg width="100" height="8" viewBox="0 0 100 8" style="display:block; margin: 0 auto 30px;"><path d="M10 4 C25 0, 35 8, 50 4 C65 0, 75 8, 90 4" stroke="#b45309" stroke-width="1.2" fill="none" opacity="0.4"/></svg>
+
+    <p class="closing-contact"><strong>Scott Glasgow</strong> · FinMango · <a href="https://finmango.org">finmango.org</a></p>
+    <div class="closing-brand"><img src="FinMango_Logo.jpg" alt="FinMango"></div>
+  </section>
+
+</div>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40); });
+</script>
+
+</body>
+</html>
