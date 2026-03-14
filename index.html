@@ -110,6 +110,21 @@
   .closing-brand { margin-top: 30px; display: flex; justify-content: center; }
   .closing-brand img { height: 24px; opacity: 0.4; }
 
+  /* TOOLS GRID */
+  .tools-section { background: var(--accent-pale); border-top: 1px solid var(--accent-light); border-bottom: 1px solid var(--accent-light); padding: 80px 0; }
+  .tools-section-inner { max-width: 820px; margin: 0 auto; padding: 0 40px; }
+  .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+  .tool-card { background: white; border: 1.5px solid var(--accent-light); padding: 28px 26px; transition: transform 0.2s, box-shadow 0.2s; text-decoration: none; color: inherit; display: block; position: relative; }
+  .tool-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(180,83,9,0.08); }
+  .tool-card-tag { font-family: 'Caveat', cursive; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .tool-card h3 { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 8px; line-height: 1.15; }
+  .tool-card p { font-size: 14px; color: var(--muted); line-height: 1.55; margin-bottom: 12px; }
+  .tool-card-status { font-family: 'Caveat', cursive; font-size: 13px; display: inline-block; padding: 2px 12px; border-radius: 10px; }
+  .tool-card-status.live { color: #0f766e; background: #ccfbf1; }
+  .tool-card-status.new { color: var(--accent); background: var(--accent-light); }
+  .tool-card-arrow { position: absolute; right: 22px; top: 28px; font-size: 18px; color: var(--light); transition: color 0.2s; }
+  .tool-card:hover .tool-card-arrow { color: var(--accent); }
+
   .section-illustration { margin: 20px 0 40px; text-align: center; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
@@ -121,6 +136,7 @@
     nav { padding: 14px 20px; } .nav-links a:nth-child(-n+4) { display: none; } .wrap { padding: 0 24px; }
     .stats-inner { flex-direction: column; gap: 24px; padding: 0 24px; } .layer { flex-direction: column; gap: 12px; } .layer-sketch { width: auto; }
     .pillars { grid-template-columns: 1fr; } .channel-grid { grid-template-columns: 1fr; }
+    .tools-grid { grid-template-columns: 1fr; }
     .metric-row, .timeline-phase { flex-direction: column; gap: 4px; }
     .metric-name, .phase-label, .phase-time { min-width: auto; }
     .hero-meta { flex-direction: column; gap: 12px; } .hero-meta-right { text-align: left; }
@@ -137,6 +153,7 @@
   </a>
   <div class="nav-links">
     <a href="#problem">Problem</a>
+    <a href="#tools">Tools</a>
     <a href="#solution">How It Works</a>
     <a href="#impact">Impact</a>
     <a href="https://finmango.org/barometer.html">Live Barometer</a>
@@ -237,22 +254,80 @@
 
     <p class="lead">FinMango has spent years building the infrastructure for this. FinVitals is the AI layer that turns it into an engine.</p>
 
-    <div class="callout reveal">
-      <div class="callout-label">live now</div>
-      <h3>Financial Health Barometer</h3>
-      <p>A real-time dashboard tracking four dimensions of financial stress — financial anxiety, food insecurity, housing stress, and affordability — across all 50 states. Pulls from BLS, Census, HUD, FRED, Harvard JCHS, and Google Trends daily. Open source. Published methodology. Academic-grade citation format. Already on our homepage.</p>
-      <p>This is the surveillance layer. It sees the crisis forming. What it can't do yet is <em>act</em> on what it sees.</p>
-      <div class="tool-links">
-        <a href="https://finmango.org/barometer.html" class="tool-link" target="_blank">Live Barometer →</a>
-        <a href="https://finmango.org/food-assistance-calculator" class="tool-link" target="_blank">Food Assistance Calculator →</a>
-        <a href="https://finmango.org/food-desert-analyzer" class="tool-link" target="_blank">Food Desert Analyzer →</a>
-      </div>
-    </div>
-
-    <p>On top of that: a <strong>Food Assistance Calculator</strong> that checks SNAP, WIC, and pantry eligibility at once. A <strong>Food Desert Analyzer</strong> that maps grocery access barriers by zip code. Two years of field research across five U.S. communities with the University of Virginia. A Google Health partnership published in Nature. Open-source datasets covering 22,000+ locations across 190 countries.</p>
+    <p>Two years of field research across five U.S. communities with the University of Virginia. A Google Health partnership published in Nature and the American Journal of Health Education. Open-source datasets covering 22,000+ locations across 190 countries. And five live tools that already serve real users.</p>
 
     <p>The pieces are all there. FinVitals connects them with AI.</p>
   </section>
+
+</div>
+
+<!-- TOOLS SHOWCASE (full-width) -->
+<div class="tools-section reveal" id="tools">
+  <div class="tools-section-inner">
+    <div class="section-label">live tools</div>
+    <h2 style="font-family:'Caveat',cursive; font-size:clamp(42px,6vw,54px); font-weight:600; color:#1a1a1a; line-height:1.05; margin-bottom:6px;">try them now</h2>
+    <svg class="wavy" width="200" height="8" viewBox="0 0 200 8"><path d="M0 4 C20 0, 40 8, 60 4 C80 0, 100 8, 120 4 C140 0, 160 8, 180 4" stroke="#b45309" stroke-width="1.2" fill="none"/></svg>
+    <p style="font-size:17px; color:#3a3a3a; line-height:1.75; margin-bottom:0; max-width:620px;">Every tool below is live. The first three power FinVitals' surveillance and action layers. The last two show how the same architecture extends to disaster recovery.</p>
+
+    <div class="tools-grid">
+      <!-- Barometer -->
+      <a href="https://finmango.org/barometer.html" class="tool-card" target="_blank">
+        <div class="tool-card-tag">surveillance layer</div>
+        <h3>Financial Health Barometer</h3>
+        <p>Real-time financial stress tracking across all 50 states. Four dimensions: anxiety, food insecurity, housing stress, affordability. Daily updates from BLS, Census, HUD, FRED, and Google Trends.</p>
+        <span class="tool-card-status live">✦ live</span>
+        <span class="tool-card-arrow">→</span>
+      </a>
+
+      <!-- Food Assistance Calculator -->
+      <a href="https://finmango.org/food-assistance-calculator" class="tool-card" target="_blank">
+        <div class="tool-card-tag">connect layer · food</div>
+        <h3>Food Assistance Calculator</h3>
+        <p>Cross-program eligibility screening. Checks SNAP, WIC, school meals, food pantries, and utility assistance in one conversation.</p>
+        <span class="tool-card-status live">✦ live</span>
+        <span class="tool-card-arrow">→</span>
+      </a>
+
+      <!-- Food Desert Analyzer -->
+      <a href="https://finmango.org/food-desert-analyzer" class="tool-card" target="_blank">
+        <div class="tool-card-tag">connect layer · access</div>
+        <h3>Food Desert Analyzer</h3>
+        <p>Maps grocery store access, fresh food availability, and transportation barriers by zip code. Scores every community's food access landscape.</p>
+        <span class="tool-card-status live">✦ live</span>
+        <span class="tool-card-arrow">→</span>
+      </a>
+
+      <!-- Affordability Lab -->
+      <a href="https://finmango.org/affordability-lab.html" class="tool-card" target="_blank">
+        <div class="tool-card-tag">surveillance layer · housing</div>
+        <h3>Affordability Lab</h3>
+        <p>Interactive housing affordability analysis. Explores rent burden, income-to-housing ratios, and cost-of-living pressures across U.S. communities.</p>
+        <span class="tool-card-status live">✦ live</span>
+        <span class="tool-card-arrow">→</span>
+      </a>
+
+      <!-- Disaster Aid Finder -->
+      <a href="disaster-aid-finder.html" class="tool-card">
+        <div class="tool-card-tag">connect layer · disaster</div>
+        <h3>Disaster Aid Finder</h3>
+        <p>8-question intake → personalized list of every program you may qualify for after a disaster. FEMA, SBA, Medicaid, crisis counseling, food assistance, and more.</p>
+        <span class="tool-card-status new">✦ prototype</span>
+        <span class="tool-card-arrow">→</span>
+      </a>
+
+      <!-- Recovery Roadmap -->
+      <a href="recovery-roadmap.html" class="tool-card">
+        <div class="tool-card-tag">connect layer · disaster</div>
+        <h3>Recovery Roadmap</h3>
+        <p>Interactive timeline showing the exact filing sequence after a disaster — what depends on what, every deadline, and why order matters.</p>
+        <span class="tool-card-status new">✦ prototype</span>
+        <span class="tool-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
 
   <!-- 03 SOLUTION -->
   <section class="section reveal" id="solution">

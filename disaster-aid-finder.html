@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Disaster Aid Finder — FinVitals by FinMango</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'DM Sans', -apple-system, sans-serif; background: #fefefe; color: #3a3a3a; }
+  button { font-family: inherit; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+
+const STEPS = [
+  { id: "disaster", question: "What type of disaster affected you?", options: ["Hurricane", "Flood", "Wildfire", "Tornado", "Earthquake", "Other"] },
+  { id: "housing", question: "How was your home affected?", options: ["Destroyed / uninhabitable", "Major damage (structural)", "Minor damage (cosmetic)", "No damage to home"] },
+  { id: "insurance", question: "Do you have homeowner's or renter's insurance?", options: ["Yes — homeowner's", "Yes — renter's", "No insurance", "Not sure"] },
+  { id: "flood_ins", question: "Do you have flood insurance?", options: ["Yes", "No", "Not sure"] },
+  { id: "income", question: "What's your approximate household income?", options: ["Under $25,000", "$25,000 – $50,000", "$50,000 – $75,000", "Over $75,000"] },
+  { id: "household", question: "Who's in your household?", options: ["Just me", "Me + spouse/partner", "Family with children", "Family with elderly members", "Multi-generational"] },
+  { id: "health", question: "Were you or your family's health needs affected?", options: ["Lost health insurance (job loss)", "Lost medications or medical equipment", "Need mental health support", "No health impact", "Multiple health impacts"] },
+  { id: "employment", question: "Was your employment affected?", options: ["Lost job due to disaster", "Can't get to work (transportation)", "Self-employed / business damaged", "Employment not affected"] },
+];
+
+function getPrograms(a) {
+  const p = [];
+  if (a.housing !== "No damage to home") {
+    p.push({ name: "FEMA Individual & Household Program", category: "financial", urgency: "high", deadline: "60 days from disaster declaration", amount: "Up to $43,500 (FY2025)", description: "Grants for temporary housing, home repair, and other serious disaster-related needs. Not a loan — you don't pay it back.", action: "Apply at DisasterAssistance.gov, via the FEMA app, or call 1-800-621-3362", note: a.insurance !== "No insurance" ? "File your insurance claim first — FEMA requires a settlement or denial letter before processing most assistance." : null });
+  }
+  if (a.housing === "Destroyed / uninhabitable" || a.housing === "Major damage (structural)") {
+    p.push({ name: "FEMA Serious Needs Assistance", category: "financial", urgency: "critical", deadline: "30 days from declaration (may extend to 60)", amount: "$750 one-time payment", description: "Immediate cash for essential items like food, water, medicine, and baby formula. Fastest FEMA payment — can arrive before inspection.", action: "Included automatically when you apply for FEMA assistance" });
+  }
+  if (a.housing !== "No damage to home" || a.employment === "Self-employed / business damaged") {
+    p.push({ name: "SBA Disaster Loans", category: "financial", urgency: "high", deadline: "60 days for physical damage, 9 months for economic injury", amount: "Up to $500,000 (home) / $2M (business)", description: "Low-interest loans for homeowners, renters, and businesses. Important: FEMA requires you to submit an SBA application to be considered for certain grants, even if you don't want a loan.", action: "Apply at SBA.gov/disaster or call 1-800-659-2955", note: "If you're denied by SBA, you may be referred back to FEMA for additional grant assistance." });
+  }
+  if (a.insurance !== "No insurance") {
+    p.push({ name: "Insurance Claim", category: "financial", urgency: "critical", deadline: "File ASAP — required before FEMA processes most assistance", amount: "Varies by policy", description: "Contact your insurance company immediately. Document everything with photos before cleaning up. FEMA can only help with expenses your insurance doesn't cover.", action: "Call your insurance company's claims line. Send settlement/denial letter to FEMA when received.", note: a.disaster === "Hurricane" ? "Wind damage and flood damage may be covered by different policies. Check both." : null });
+  }
+  if ((a.disaster === "Hurricane" || a.disaster === "Flood") && a.flood_ins === "No") {
+    p.push({ name: "NFIP Group Flood Insurance Policy", category: "financial", urgency: "medium", deadline: "Automatic if you receive FEMA flood assistance", amount: "3-year policy at no cost", description: "If FEMA determines your home is in a flood zone and provides assistance, you may receive a group flood insurance policy for future protection.", action: "No separate application needed — processed through FEMA" });
+  }
+  if (a.health === "Lost health insurance (job loss)" || a.health === "Multiple health impacts") {
+    p.push({ name: "Emergency Medicaid / Disaster Medicaid", category: "health", urgency: "high", deadline: "Varies by state — apply immediately", amount: "Full health coverage", description: "If you lost employer-sponsored health insurance due to the disaster, you may qualify for emergency Medicaid or a special enrollment period on the Health Insurance Marketplace.", action: "Contact your state Medicaid office or apply at HealthCare.gov (special enrollment)" });
+  }
+  if (a.health === "Need mental health support" || a.health === "Multiple health impacts" || a.housing === "Destroyed / uninhabitable") {
+    p.push({ name: "FEMA Crisis Counseling Program", category: "health", urgency: "medium", deadline: "Available as long as program is active", amount: "Free — no cost to you", description: "Free, confidential counseling for disaster survivors. Covers stress, anxiety, grief, PTSD, and substance abuse. No diagnosis or insurance required.", action: "Call the Disaster Distress Helpline: 1-800-985-5990 (24/7, multilingual)" });
+  }
+  if (a.health === "Lost medications or medical equipment" || a.health === "Multiple health impacts") {
+    p.push({ name: "Emergency Prescription Assistance (EPAP)", category: "health", urgency: "critical", deadline: "Active during federal disaster declarations", amount: "Up to 30-day supply", description: "If you lost medications or medical equipment and don't have insurance to replace them, EPAP provides emergency supplies at participating pharmacies.", action: "Visit any participating pharmacy with your FEMA application number" });
+  }
+  if (a.income === "Under $25,000" || a.income === "$25,000 – $50,000" || a.employment !== "Employment not affected") {
+    p.push({ name: "SNAP Expedited Benefits / D-SNAP", category: "food", urgency: "high", deadline: "D-SNAP typically available for 7 days after activation", amount: "Varies by household size", description: "Disaster SNAP provides food benefits to households affected by a disaster who wouldn't normally qualify. Expedited SNAP can arrive within 7 days.", action: "Check if D-SNAP is active in your area at your state's SNAP office" });
+  }
+  p.push({ name: "Emergency Food Assistance", category: "food", urgency: "critical", deadline: "Immediate — no application needed", amount: "Free food and supplies", description: "Red Cross shelters, food banks, and community organizations provide immediate food assistance. No eligibility requirements.", action: "Find your nearest food bank at FeedingAmerica.org or text FOOD to 211" });
+  if (a.employment === "Lost job due to disaster" || a.employment === "Can't get to work (transportation)" || a.employment === "Self-employed / business damaged") {
+    p.push({ name: "Disaster Unemployment Assistance", category: "financial", urgency: "high", deadline: "30 days from DUA announcement", amount: "Based on prior earnings", description: "Weekly payments for workers and self-employed individuals who lost income due to the disaster and aren't eligible for regular unemployment.", action: "Apply through your state unemployment office" });
+  }
+  if (a.housing === "Destroyed / uninhabitable" || a.housing === "Major damage (structural)") {
+    p.push({ name: "Disaster Legal Services", category: "legal", urgency: "medium", deadline: "Available while program is active", amount: "Free legal assistance", description: "Free legal help for insurance disputes, landlord/tenant issues, contractor fraud, FEMA appeals, and replacing lost documents.", action: "Call 1-800-621-3362 and ask for Disaster Legal Services" });
+  }
+  p.push({ name: "Utility Moratorium & Assistance", category: "financial", urgency: "medium", deadline: "Varies by state and utility", amount: "Shutoff protection + payment help", description: "Many states suspend disconnections after declared disasters. LIHEAP and local programs may cover past-due balances.", action: "Contact your utility company about disaster moratorium" });
+  p.push({ name: "IRS Disaster Tax Relief", category: "financial", urgency: "low", deadline: "Extended deadlines vary by disaster", amount: "Deductions + extended deadlines", description: "The IRS extends filing and payment deadlines for disaster areas. You may also claim casualty losses on your return.", action: "Check IRS.gov/disaster for your specific relief provisions" });
+  if (a.housing !== "No damage to home" && (a.insurance === "Yes — homeowner's" || a.insurance === "No insurance")) {
+    p.push({ name: "Mortgage Forbearance", category: "financial", urgency: "medium", deadline: "Contact lender ASAP", amount: "Pause/reduce payments up to 12 months", description: "If you have a federally-backed mortgage (FHA, VA, USDA, Fannie/Freddie), you can request disaster forbearance.", action: "Call your mortgage servicer and request disaster forbearance" });
+  }
+  return p;
+}
+
+const catColors = { financial: { bg: "#e4f0fa", text: "#2a6b9b", label: "Financial" }, health: { bg: "#e8f5ee", text: "#2a7d5b", label: "Health" }, food: { bg: "#fdf6ec", text: "#b8860b", label: "Food" }, legal: { bg: "#f3e8fa", text: "#7b5ea7", label: "Legal" } };
+const urgStyles = { critical: { color: "#c4553a", label: "Act now" }, high: { color: "#d4933a", label: "This week" }, medium: { color: "#2a6b9b", label: "Soon" }, low: { color: "#7a7a7a", label: "When ready" } };
+
+function App() {
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState({});
+  const [done, setDone] = useState(false);
+  const [filter, setFilter] = useState("all");
+
+  const handleAnswer = (v) => {
+    const na = { ...answers, [STEPS[step].id]: v };
+    setAnswers(na);
+    if (step < STEPS.length - 1) setStep(step + 1);
+    else setDone(true);
+  };
+  const reset = () => { setStep(0); setAnswers({}); setDone(false); setFilter("all"); };
+
+  const programs = done ? getPrograms(answers) : [];
+  const filtered = filter === "all" ? programs : programs.filter(p => p.category === filter);
+  const cats = [...new Set(programs.map(p => p.category))];
+
+  if (done) {
+    return (
+      <div style={{ maxWidth: 800, margin: "0 auto", padding: "24px 20px" }}>
+        <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <h1 style={{ fontFamily: "Caveat, cursive", fontSize: 42, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>finvitals</h1>
+          <p style={{ color: "#7a7a7a", fontSize: 13 }}>disaster aid finder</p>
+        </div>
+        <div style={{ background: "#f2f8fc", border: "1px solid #e4f0fa", borderRadius: 6, padding: "20px 24px", marginBottom: 24, textAlign: "center" }}>
+          <p style={{ fontSize: 28, fontWeight: 700, color: "#2a6b9b", marginBottom: 4 }}>{programs.length} programs found</p>
+          <p style={{ color: "#7a7a7a", fontSize: 14 }}>You may qualify across {cats.length} categories: {cats.map(c => catColors[c].label).join(", ")}</p>
+        </div>
+        <div style={{ display: "flex", gap: 8, marginBottom: 20, flexWrap: "wrap" }}>
+          <button onClick={() => setFilter("all")} style={{ padding: "6px 16px", borderRadius: 20, border: filter === "all" ? "2px solid #2a6b9b" : "1.5px solid #e8e8e8", background: filter === "all" ? "#e4f0fa" : "white", color: filter === "all" ? "#2a6b9b" : "#7a7a7a", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>All ({programs.length})</button>
+          {cats.map(c => (
+            <button key={c} onClick={() => setFilter(c)} style={{ padding: "6px 16px", borderRadius: 20, border: filter === c ? `2px solid ${catColors[c].text}` : "1.5px solid #e8e8e8", background: filter === c ? catColors[c].bg : "white", color: filter === c ? catColors[c].text : "#7a7a7a", fontSize: 13, fontWeight: 500, cursor: "pointer" }}>{catColors[c].label} ({programs.filter(p => p.category === c).length})</button>
+          ))}
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {filtered.map((p, i) => (
+            <div key={i} style={{ border: "1.5px solid #e8e8e8", borderRadius: 6, padding: "20px 22px", background: "white" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+                <div>
+                  <h3 style={{ fontSize: 17, fontWeight: 600, color: "#1a1a1a", marginBottom: 4 }}>{p.name}</h3>
+                  <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                    <span style={{ fontSize: 11, padding: "2px 10px", borderRadius: 10, background: catColors[p.category].bg, color: catColors[p.category].text, fontWeight: 500 }}>{catColors[p.category].label}</span>
+                    <span style={{ fontSize: 11, color: urgStyles[p.urgency].color, fontWeight: 600 }}>● {urgStyles[p.urgency].label}</span>
+                  </div>
+                </div>
+                {p.amount && <p style={{ fontSize: 15, fontWeight: 600, color: "#2a6b9b", textAlign: "right" }}>{p.amount}</p>}
+              </div>
+              <p style={{ fontSize: 14, color: "#3a3a3a", lineHeight: 1.6, marginBottom: 10 }}>{p.description}</p>
+              {p.note && <p style={{ fontSize: 13, color: "#c4553a", lineHeight: 1.5, marginBottom: 10, padding: "8px 12px", background: "#fdf0ec", borderRadius: 4 }}>⚠ {p.note}</p>}
+              <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 10 }}>
+                <p style={{ fontSize: 12, color: "#7a7a7a", marginBottom: 4 }}>⏰ Deadline: {p.deadline}</p>
+                <p style={{ fontSize: 13, color: "#2a6b9b", fontWeight: 500 }}>→ {p.action}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ marginTop: 28, textAlign: "center" }}>
+          <p style={{ fontSize: 11, color: "#aaa", lineHeight: 1.6, maxWidth: 560, margin: "0 auto 16px" }}>This tool provides general guidance only. Eligibility depends on your specific disaster declaration and location. Not legal or financial advice.</p>
+          <button onClick={reset} style={{ padding: "10px 24px", background: "white", border: "1.5px solid #d0d0d0", borderRadius: 4, fontSize: 14, color: "#3a3a3a", cursor: "pointer" }}>Start Over</button>
+        </div>
+        <div style={{ textAlign: "center", marginTop: 24, paddingTop: 16, borderTop: "1px solid #e8e8e8" }}>
+          <p style={{ fontSize: 11, color: "#aaa" }}>FinVitals by <a href="https://finmango.org" style={{ color: "#2a6b9b", textDecoration: "none" }}>FinMango</a> · 501(c)(3)</p>
+        </div>
+      </div>
+    );
+  }
+
+  const cur = STEPS[step];
+  const pct = (step / STEPS.length) * 100;
+
+  return (
+    <div style={{ maxWidth: 560, margin: "0 auto", padding: "24px 20px" }}>
+      <div style={{ textAlign: "center", marginBottom: 36 }}>
+        <h1 style={{ fontFamily: "Caveat, cursive", fontSize: 42, fontWeight: 700, color: "#1a1a1a", marginBottom: 4 }}>finvitals</h1>
+        <p style={{ color: "#2a6b9b", fontSize: 14 }}>disaster aid finder</p>
+      </div>
+      <div style={{ marginBottom: 32 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+          <span style={{ fontSize: 12, color: "#7a7a7a" }}>Question {step + 1} of {STEPS.length}</span>
+          <span style={{ fontSize: 12, color: "#7a7a7a" }}>{Math.round(pct)}%</span>
+        </div>
+        <div style={{ height: 3, background: "#e8e8e8", borderRadius: 2 }}>
+          <div style={{ height: 3, background: "#2a6b9b", borderRadius: 2, width: `${pct}%`, transition: "width 0.3s" }} />
+        </div>
+      </div>
+      <h2 style={{ fontSize: 22, fontWeight: 500, color: "#1a1a1a", marginBottom: 24, lineHeight: 1.4 }}>{cur.question}</h2>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {cur.options.map(opt => (
+          <button key={opt} onClick={() => handleAnswer(opt)} style={{ padding: "14px 20px", background: "white", border: "1.5px solid #e8e8e8", borderRadius: 6, fontSize: 15, color: "#3a3a3a", textAlign: "left", cursor: "pointer", transition: "all 0.15s" }}
+            onMouseEnter={e => { e.target.style.borderColor = "#2a6b9b"; e.target.style.background = "#f2f8fc"; }}
+            onMouseLeave={e => { e.target.style.borderColor = "#e8e8e8"; e.target.style.background = "white"; }}
+          >{opt}</button>
+        ))}
+      </div>
+      {step > 0 && <button onClick={() => setStep(step - 1)} style={{ marginTop: 20, padding: "8px 16px", background: "none", border: "none", fontSize: 13, color: "#7a7a7a", cursor: "pointer" }}>← Back</button>}
+      <div style={{ textAlign: "center", marginTop: 40, paddingTop: 16, borderTop: "1px solid #e8e8e8" }}>
+        <p style={{ fontSize: 11, color: "#aaa" }}>FinVitals by <a href="https://finmango.org" style={{ color: "#2a6b9b", textDecoration: "none" }}>FinMango</a> · 501(c)(3)</p>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
